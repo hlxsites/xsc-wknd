@@ -14,14 +14,17 @@
   /* colors */
   --link-color: #035fe6;
   --link-hover-color: #136ff6;
-  --background-color: #fff;
+  --background-color: rgb(4 25 45 / 55%);
+  --background-color-light: rgb(239 246 246 / 34%);
   --overlay-background-color: #eee;
-  --highlight-background-color: #ccc;
+  --highlight-background-color: #ffc719;
   --text-color: #000;
+  --background-color-nav: rgb(253 253 254 / 95%);
+  --nav-color: #fff;
 
   /* fonts */
-  --body-font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
-  --heading-font-family: var(--body-font-family);
+  --body-font-family: adobe-clean-light, 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
+  --heading-font-family: adobe-clean-regular, 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
@@ -38,7 +41,7 @@
   --heading-font-size-xs: 18px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 89px;
 
 }
 
@@ -81,8 +84,16 @@ h4, h5, h6 {
   scroll-margin: calc(var(--nav-height) + 1em);
 }
 
-h1 { font-size: var(--heading-font-size-xxl) }
-h2 { font-size: var(--heading-font-size-xl) }
+h1 { 
+  font-size: var(--heading-font-size-xxl); 
+  text-shadow: 1px 1px 2px #000;
+}
+
+h2 { 
+  font-size: var(--heading-font-size-xl); 
+  text-shadow: 1px 1px 2px #000;
+}
+
 h3 { font-size: var(--heading-font-size-l) }
 h4 { font-size: var(--heading-font-size-m) }
 h5 { font-size: var(--heading-font-size-s) }
@@ -211,6 +222,7 @@ main img {
 
 .icon {
   display: inline-block;
+  fill:var(--nav-color);
   height: 24px;
   width: 24px;
 }

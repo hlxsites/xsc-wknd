@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.47 60.85">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-linecap: square;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #484751;
+        stroke-miterlimit: 10;
+        stroke-width: 2.63px;
+      }
+    </style>
+  </defs>
+  <g id="Icons">
+    <g id="_6" data-name="6">
+      <path class="cls-2" d="m20.68,51.26H1.32v-15.16c0-.53,0-1.05.04-1.57,0-.29.02-.58.05-.87C2.66,15.59,17.71,1.32,36.1,1.32h36.06v49.94h-34.92"/>
+      <path class="cls-2" d="m32.73,26.29v-13.72h-4.85c-7.9,0-14.42,6.02-15.22,13.72h20.07Z"/>
+      <circle class="cls-1" cx="28.96" cy="51.26" r="8.28" transform="translate(-27.76 35.49) rotate(-45)"/>
+      <polyline class="cls-1" points="42.76 38.78 1.36 38.78 1.36 34.53 1.36 33.66 1.41 33.66 48.82 33.66"/>
+      <polyline class="cls-1" points="66.82 33.66 72.16 33.66 72.16 38.78 61.49 38.78"/>
+      <rect class="cls-1" x="48.81" y="26.29" width="12.67" height="24.97" transform="translate(110.3 77.55) rotate(180)"/>
+    </g>
+  </g>
+</svg>
