@@ -1,17 +1,23 @@
 {
   "project": "XSC Demo",
+  "host":"www.adobe.com",
   "plugins": [
+    {
+      "id": "foo",
+      "title": "Foo",
+      "event": "foo"
+    },
     {
       "id": "library",
       "title": "Library",
-      "environments": [ "edit" ],
+      "environments": [ "dev", "edit" ],
       "url": "https://main--wknd--hlxsites.hlx.live/tools/sidekick/library.html",
       "includePaths": [ "**.docx**" ]
     },
     {
       "id": "assets",
       "title": "Assets",
-      "environments": [ "edit" ],
+      "environments": [ "dev", "edit" ],
       "url": "https://wknd.findmy.media/",
       "includePaths": [ "**.docx**" ]
     }
