@@ -3,9 +3,9 @@
   "host":"www.adobe.com",
   "plugins": [
     {
-      "id": "foo",
-      "title": "Foo",
-      "event": "foo"
+      "id": "createPage",
+      "title": "Create New Page",
+      "event": "createPage"
     },
     {
       "id": "library",

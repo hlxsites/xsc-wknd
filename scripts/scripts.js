@@ -122,19 +122,21 @@ async function loadPage() {
 
 loadPage();
 
-const foo = ({ detail }) => {
+const createPage = ({ detail }) => {
   const sk = detail.data;
   // your custom code from button.action goes here
+
+  alert('create a page');
 };
 
 const sk = document.querySelector('helix-sidekick');
 if (sk) {
   // sidekick already loaded
-  sk.addEventListener('custom:foo', foo);
+  sk.addEventListener('custom:createPage', createPage);
 } else {
   // wait for sidekick to be loaded
   document.addEventListener('sidekick-ready', () => {
     document.querySelector('helix-sidekick')
-      .addEventListener('custom:foo', foo);
+      .addEventListener('custom:createPage', createPage);
   }, { once: true });
-}
+};
