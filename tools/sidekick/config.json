@@ -1,0 +1,19 @@
+{
+  "project": "XSC Demo",
+  "plugins": [
+    {
+      "id": "library",
+      "title": "Library",
+      "environments": [ "edit" ],
+      "url": "https://main--wknd--hlxsites.hlx.live/tools/sidekick/library.html",
+      "includePaths": [ "**.docx**" ]
+    },
+    {
+      "id": "assets",
+      "title": "Assets",
+      "environments": [ "edit" ],
+      "url": "https://wknd.findmy.media/",
+      "includePaths": [ "**.docx**" ]
+    }
+  ]
+}
