@@ -15,7 +15,7 @@
   --link-color: #035fe6;
   --link-hover-color: #136ff6;
   --background-color: rgb(4 25 45 / 55%);
-  --background-color-light: rgb(239 246 246 / 34%);
+  --background-color-light: #fff;
   --overlay-background-color: #eee;
   --highlight-background-color: #ffc719;
   --text-color: #000;
@@ -62,7 +62,7 @@ body {
   font-family: var(--body-font-family);
   line-height: 1.6;
   color: var(--text-color);
-  background-color: var(--background-color);
+  background-color: var(--background-color-light);
   display: none;
 }
 
@@ -235,6 +235,11 @@ main img {
 main .section {
   padding: 64px 16px;
 }
+
+/* main:has(.section.overview), main:has(.section.itinerary), main:has(.section.what-to-bring) {
+  display: flex;
+  flex-direction: row;
+} */
 
 @media (min-width: 600px) {
   main .section {

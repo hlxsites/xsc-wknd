@@ -11,6 +11,7 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
+  getMetadata
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -21,15 +22,17 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
  */
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
-  const h2 = main.querySelector('h2');
-  const seperator = document.createElement('span');
-  seperator.classList.add('seperator');
-
   const content = document.createElement('div');
   content.classList.add('hero-content');
   content.append(h1);
-  content.append(seperator);
-  content.append(h2);
+
+  const h2 = main.querySelector('h2');
+  if(h2) {
+    const seperator = document.createElement('span');
+    seperator.classList.add('seperator');
+    content.append(seperator);
+    content.append(h2);
+  }
 
   const picture = main.querySelector('picture');
   // eslint-disable-next-line no-bitwise
@@ -40,6 +43,35 @@ function buildHeroBlock(main) {
     main.prepend(section);
   }
 }
+
+/**
+ * to add/remove a template, just add/remove it in the list below
+ */
+const TEMPLATE_LIST = [
+  'adventures'
+];
+
+/**
+ * Run template specific decoration code.
+ * @param {Element} main The container element
+ */
+async function decorateTemplates(main) {
+  try {
+    const template = getMetadata('template');
+    const templates = TEMPLATE_LIST;
+    if (templates.includes(template)) {
+      const mod = await import(`../templates/${template}/${template}.js`);
+      loadCSS(`${window.hlx.codeBasePath}/templates/${template}/${template}.css`);
+      if (mod.default) {
+        await mod.default(main);
+      }
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
+
 
 /**
  * Builds all synthetic blocks in a container element.
@@ -77,6 +109,7 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    decorateTemplates(main);
     decorateMain(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
@@ -126,7 +159,7 @@ const createPage = ({ detail }) => {
   const sk = detail.data;
   // your custom code from button.action goes here
 
-  alert('create a page');
+  alert('create a new page');
 };
 
 const sk = document.querySelector('helix-sidekick');
