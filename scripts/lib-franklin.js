@@ -128,9 +128,9 @@ export async function loadScript(src, attrs) {
  * @param {string} name The metadata name (or property)
  * @returns {string} The metadata value(s)
  */
-export function getMetadata(name) {
+export function getMetadata(name, doc = document) {
   const attr = name && name.includes(':') ? 'property' : 'name';
-  const meta = [...document.head.querySelectorAll(`meta[${attr}="${name}"]`)].map((m) => m.content).join(', ');
+  const meta = [...doc.head.querySelectorAll(`meta[${attr}="${name}"]`)].map((m) => m.content).join(', ');
   return meta || '';
 }
 
