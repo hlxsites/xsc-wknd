@@ -11,7 +11,7 @@
       "id": "library",
       "title": "Library",
       "environments": [ "dev", "edit" ],
-      "url": "https://main--wknd--hlxsites.hlx.live/tools/sidekick/library.html",
+      "url": "https://main--xsc-franklin-demo--lamontacrook.hlx.live/tools/sidekick/library.html",
       "includePaths": [ "**.docx**" ]
     },
     {
