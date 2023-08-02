@@ -4,8 +4,10 @@
   "plugins": [
     {
       "id": "createPage",
-      "title": "Create New Page",
-      "event": "createPage"
+      "title": "Create New Article",
+      "environments": [ "dev", "edit" ],
+      "url": "https://main--xsc-franklin-demo--lamontacrook.hlx.live/tools/sidekick/cf.html",
+      "includePaths": [ "**.docx**" ]
     },
     {
       "id": "library",
