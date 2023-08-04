@@ -11,7 +11,7 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
-  getMetadata
+  getMetadata,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -27,7 +27,7 @@ function buildHeroBlock(main) {
   content.append(h1);
 
   const h2 = main.querySelector('h2');
-  if(h2) {
+  if (h2) {
     const seperator = document.createElement('span');
     seperator.classList.add('seperator');
     content.append(seperator);
@@ -48,7 +48,7 @@ function buildHeroBlock(main) {
  * to add/remove a template, just add/remove it in the list below
  */
 const TEMPLATE_LIST = [
-  'adventures'
+  'adventures',
 ];
 
 /**
@@ -71,7 +71,6 @@ async function decorateTemplates(main) {
     console.error('Auto Blocking failed', error);
   }
 }
-
 
 /**
  * Builds all synthetic blocks in a container element.
@@ -154,22 +153,3 @@ async function loadPage() {
 }
 
 loadPage();
-
-const createPage = ({ detail }) => {
-  const sk = detail.data;
-  // your custom code from button.action goes here
-
-  alert('create a new page');
-};
-
-const sk = document.querySelector('helix-sidekick');
-if (sk) {
-  // sidekick already loaded
-  sk.addEventListener('custom:createPage', createPage);
-} else {
-  // wait for sidekick to be loaded
-  document.addEventListener('sidekick-ready', () => {
-    document.querySelector('helix-sidekick')
-      .addEventListener('custom:createPage', createPage);
-  }, { once: true });
-};
