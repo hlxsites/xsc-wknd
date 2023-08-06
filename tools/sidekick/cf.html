@@ -1,42 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <meta name="Description" content="Sidekick Library" />
-    <meta name="robots" content="noindex" />
-    <base href="/" />
 
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-        background-color: #ededed;
-        height: 100%;
-      }
-      
-      helix-sidekick { display: none }
-    </style>
-    <title>Content Fragment Library</title>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Sidekick Library" />
+  <meta name="robots" content="noindex" />
+  <base href="/" />
+  <title>Content Fragment Picker</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: #323232;
+      height: 100%;
+    }
 
-  <body>
-    <script
-      type="module"
-      src="https://www.hlx.live/tools/sidekick/library/index.js"
-    ></script>
-    <script>
-      const library = document.createElement('cf-library')
-      // library.config = {
-      //   base: '/tools/sidekick/library.json',
-      // }
+    helix-sidekick {
+      display: none
+    }
 
-      document.body.prepend(library)
-    </script>
-  </body>
+    body .wrapper {
+      display: grid;
+      grid-template-columns: 349px auto;
+      grid-template-rows: repeat(n, minmax(auto, 1fr));
+      grid-template-areas:
+        'header header'
+        'side-bar main-body'
+    }
+
+    body .top-bar {
+      grid-area: header;
+      display: flex;
+    }
+
+    body .top-bar img {
+      height: 29px;
+      margin: 12px;
+    }
+
+    body .top-bar span {
+      color: #fff;
+      padding: 15px;
+      justify-content: center;
+      background-color: blue;
+    }
+
+    body .side-rail {
+      grid-area: side-bar;
+      background-color: red;
+      color: #fff;
+      width: 349px;
+      height: 100%;
+      padding: 0 20px 0 20px;
+    }
+
+    body .main-body {
+      grid-area: main-body;
+      background-color: #fff;
+      width: 100%;
+    }
+  </style>
+  <title>Content Fragment Library</title>
+</head>
+
+<body>
+  <!-- <script type="module" src="https://www.hlx.live/tools/sidekick/library/index.js"></script> -->
+  <script>
+    const library = document.createElement('cf-library')
+    // library.config = {
+    //   base: '/tools/sidekick/library.json',
+    // }
+
+    document.body.prepend(library)
+  </script>
+  <main>
+    <div class='wrapper'>
+      <div class='top-bar'>
+        <div class="logo-container">
+          <img label="adobe logo" size="xxl"
+            src="data:image/svg+xml;base64,PHN2ZyBpZD0iQWRvYmVFeHBlcmllbmNlQ2xvdWQiIGRhdGEtbmFtZT0iTGF5ZXIgMSIgdmlld0JveD0iLTUgLTUgMjUwIDI0NCIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIyNDQiCiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCBoZWlnaHQ9IjIzNCIgcng9IjQyLjUiIHdpZHRoPSIyNDAiIGZpbGw9IiNmYTBmMDAiLz4KICA8cGF0aCBkPSJNMTg2LjYxNyAxNzUuOTVoLTI4LjUwNmE2LjI0MyA2LjI0MyAwIDAgMS01Ljg0Ny0zLjc2OWwtMzAuOTQ3LTcyLjM1OWExLjM2NCAxLjM2NCAwIDAgMC0yLjYxMS0uMDM0TDk5LjQyIDE0NS43MzFhMS42MzUgMS42MzUgMCAwIDAgMS41MDYgMi4yNjloMjEuMmEzLjI3IDMuMjcgMCAwIDEgMy4wMSAxLjk5NGw5LjI4MSAyMC42NTVhMy44MTIgMy44MTIgMCAwIDEtMy41MDcgNS4zMDFINTMuNzM0YTMuNTE4IDMuNTE4IDAgMCAxLTMuMjEzLTQuOTA0bDQ5LjA5LTExNi45MDJBNi42MzkgNi42MzkgMCAwIDEgMTA1Ljg0MyA1MGgyOC4zMTRhNi42MjggNi42MjggMCAwIDEgNi4yMzIgNC4xNDRsNDkuNDMgMTE2LjkwMmEzLjUxNyAzLjUxNyAwIDAgMS0zLjIwMiA0LjkwNHoiIGRhdGEtbmFtZT0iMjU2IiBmaWxsPSIjZmZmIi8+Cjwvc3ZnPg=="
+            dir="ltr">
+          </img>
+        </div>
+        <span>AEM Content Fragment Library</span>
+      </div>
+      <div class='side-rail'>
+        <h3>Articles</h3>
+        <ul>
+          <li>San Diego Surf Spot</li>
+          <li>Arctic Surfing</li>
+          <li>Camping in Western Australia</li>
+        </ul>
+      </div>
+      <div class='main-body'>main</div>
+    </div>
+  </main>
+</body>
+
 </html>
