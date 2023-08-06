@@ -12,8 +12,9 @@
 
  :root {
   /* colors */
-  --link-color: #035fe6;
-  --link-hover-color: #136ff6;
+  --link-color: #202020;
+  --link-hover-color: #0D0D0D;
+  --link-selected-color: #3C3C3C;
   --background-color: rgb(4 25 45 / 55%);
   --background-color-light: #fff;
   --overlay-background-color: #eee;
