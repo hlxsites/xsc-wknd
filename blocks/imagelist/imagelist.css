@@ -1,18 +1,28 @@
 main .imagelist {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
   max-width: 1920px;
+  white-space: nowrap;
+  position: relative;
+  overflow-x: scroll;
+}
+
+main .section.imagelist-container {
+  padding: 64px 0;
+}
+
+main .imagelist::-webkit-scrollbar {
+  display: none;
 }
 
 main .imagelist .card {
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  width: 320px;
-  padding: 20px;
-  margin: 20px;
-  height: 626px;
+  width: 456px;
+  position: relative;
+}
+
+main .imagelist .card::after {
+  flex-basis: 350px;
+  content:'';
 }
 
 main .imagelist .card:hover {
@@ -22,7 +32,7 @@ main .imagelist .card:hover {
 main .imagelist .card img {
   object-fit: cover;
   object-position: 0 25%;
-  height: 249px;
+  height: 320px;
   width: 100%;
 }
 
@@ -39,4 +49,17 @@ main .imagelist-wrapper {
 main .imagelist a:any-link {
   color: var(--text-color);
   text-decoration: none;
+}
+
+main .imagelist .card h3 {
+  background-color: rgb(0 0 0 45%);
+  color: #fff;
+  padding: 7px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  left: 48%;
+  transform: translateX(-50%);
+  bottom: 35px;
+  font-size: medium;
 }

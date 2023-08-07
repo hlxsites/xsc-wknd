@@ -32,7 +32,6 @@ export default async function decorate(block) {
 
     const heroPicture = doc.querySelector('picture');
     const title = getMetadata('og:title', doc);
-    const desc = getMetadata('og:description', doc);
 
     const card = document.createElement('div');
     card.classList.add('card');
@@ -40,13 +39,8 @@ export default async function decorate(block) {
     const h2 = document.createElement('h3');
     h2.textContent = title;
 
-    const p = document.createElement('p');
-    p.textContent = desc;
-
     card.appendChild(heroPicture);
     card.appendChild(h2);
-    card.appendChild(p);
-
     const a = document.createElement('a');
     a.href = doc.querySelector('link').href;
     a.appendChild(card);
