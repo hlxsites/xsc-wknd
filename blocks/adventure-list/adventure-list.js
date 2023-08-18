@@ -3,20 +3,37 @@ import { getMetadata } from '../../scripts/lib-franklin.js';
 const ENDPOINT = '/graphql/execute.json/aem-demo-assets/';
 const QUERY = 'adventure-six;limit=';
 const AEM = getMetadata('urn:adobe:aem:editor:aemconnection');
+const BACKUP = '/fragments/adventure-six.plain.html';
 
 async function fetchAdventures(limit) {
   const url = new URL(`${AEM}${ENDPOINT}${QUERY}${limit}`);
-  const resp = await fetch(
-    url,
-    {
-      headers: {
-        'Content-Type': 'text/html',
+
+  try {
+    const resp = await fetch(
+      url,
+      {
+        headers: {
+          'Content-Type': 'text/html',
+        },
+        method: 'get',
+        credentials: 'include',
       },
-      method: 'get',
-      credentials: 'include',
-    },
-  );
-  return resp.json();
+    );
+    const error = new Error({
+      code: 500,
+      message: 'login error',
+    });
+    if (resp.redirected) throw (error);
+
+    return resp.json();
+  } catch (error) {
+    const resp = await fetch(BACKUP);
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(await resp.text(), 'text/html');
+    const payload = await JSON.parse(doc.querySelector('pre > code').textContent);
+
+    return payload;
+  }
 }
 
 export default async function decorate(block) {
