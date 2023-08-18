@@ -1,6 +1,5 @@
 {
   "project": "XSC Demo",
-  "host":"www.adobe.com",
   "plugins": [
     {
       "id": "createPage",
