@@ -12,7 +12,7 @@
       "id": "assets",
       "title": "Assets",
       "environments": [ "dev", "edit" ],
-      "url": "https://wknd.findmy.media/",
+      "url": "https://author-p101152-e938206.adobeaemcloud.com/assets.html/content/dam/harley-davidson",
       "includePaths": [ "**.docx**" ]
     }
   ]
