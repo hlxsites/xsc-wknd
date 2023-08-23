@@ -12,6 +12,7 @@ footer .footer {
 
 footer .footer p {
   margin: 0;
+  padding-top: 10px;
 }
 
 footer .footer ul {
@@ -50,8 +51,4 @@ footer .footer p::before {
   max-width:100%;
   border-bottom: 0.3px solid #757575;
   margin: 0 auto 20px;
-}
-
-footer .footer p {
-  padding-top: 10px;
 }

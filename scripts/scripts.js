@@ -44,15 +44,12 @@ function buildHeroBlock(main) {
 
   const h2 = main.querySelector('h2');
   if (h2) {
-    // const seperator = document.createElement('span');
-    // seperator.classList.add('seperator');
-    // content.append(seperator);
     content.append(h2);
   }
 
   const picture = main.querySelector('picture');
   const video = document.createElement('div');
-  if(!picture) {
+  if (!picture) {
     const anchor = main.querySelector('a');
     main.querySelector('p > a').remove();
     addVideo(video, anchor.href);
@@ -64,7 +61,7 @@ function buildHeroBlock(main) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [picture, content] }));
     main.prepend(section);
-  }else if (content && video) {
+  } else if (content && video) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [main.querySelector('video'), content] }));
     main.prepend(section);

@@ -6,22 +6,17 @@ export default async function decorate(block) {
   const products = await fetchJson(a.href);
 
   a.parentElement.parentElement.remove();
-  const container = addElement('div', { class: 'container' });
   const product = getMetadata('og:title');
-  const productDetail = addElement('div', {class:'product-detail'});
-  
+  const productDetail = addElement('div', { class: 'product-detail' });
   products.data.forEach((productCard) => {
-    if(productCard.name == product) {
-      console.log(productCard);
-      const productTitle = addElement('h3', {class:'product-title'}, {textContent: productCard.name});
-      const productModel = addElement('h6', {class: 'product-model'}, {textContent: productCard.model});
+    if (productCard.name === product) {
+      const productTitle = addElement('h3', { class: 'product-title' }, { textContent: productCard.name });
+      const productModel = addElement('h6', { class: 'product-model' }, { textContent: productCard.model });
       const productImage = createOptimizedPicture(productCard.images);
 
       productDetail.append(productTitle);
       productDetail.append(productModel);
       productDetail.append(productImage);
-
-      return productDetail
     }
   });
 
