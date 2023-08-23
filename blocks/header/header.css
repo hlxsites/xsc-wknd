@@ -19,7 +19,7 @@ header nav {
   max-width: 1264px;
   height: var(--nav-height);
   padding: 0 1rem;
-  font-family: var(--body-font-family);
+  font-family: var(--nav-font);
 }
 
 header nav[aria-expanded="true"] {
@@ -149,8 +149,8 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-  width: 128px;
   height: auto;
+  width: 60px;
 }
 
 /* sections */

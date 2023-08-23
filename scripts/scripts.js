@@ -28,9 +28,9 @@ function buildHeroBlock(main) {
 
   const h2 = main.querySelector('h2');
   if (h2) {
-    const seperator = document.createElement('span');
-    seperator.classList.add('seperator');
-    content.append(seperator);
+    // const seperator = document.createElement('span');
+    // seperator.classList.add('seperator');
+    // content.append(seperator);
     content.append(h2);
   }
 
@@ -168,6 +168,62 @@ async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
+}
+
+export function addVideo(element, href) {
+  element.innerHTML = `<video loop muted playsInline>
+    <source data-src="${href}" type="video/mp4" />
+  </video>`;
+
+  const video = element.querySelector('video');
+  const source = element.querySelector('video > source');
+
+  source.src = source.dataset.src;
+  video.load();
+  video.addEventListener('loadeddata', () => {
+    video.setAttribute('autoplay', true);
+    video.setAttribute('data-loaded', true);
+    video.play();
+  });
+}
+
+export async function fetchJson(href) {
+  const url = new URL(href);
+  try {
+    const resp = await fetch(
+      url,
+      {
+        headers: {
+          'Content-Type': 'text/html',
+        },
+        method: 'get',
+        credentials: 'include',
+      },
+    );
+    const error = new Error({
+      code: 500,
+      message: 'login error',
+    });
+    if (resp.redirected) throw (error);
+
+    return resp.json();
+  } catch (error) {
+    return error;
+  }
+}
+
+export function addElement(type, attributes, values = {}) {
+  const element = document.createElement(type);
+
+  Object.keys(attributes).forEach((attribute) => {
+    element.setAttribute(attribute, attributes[attribute]);
+  });
+
+  Object.keys(values).forEach((val) => {
+    element[val] = values[val];
+  });
+
+  return element;
 }
 
 loadPage();

@@ -1,0 +1,50 @@
+main .product-list>.container {
+  display: flex;
+  min-width: 100%;
+  margin: auto;
+}
+
+main .product-list .color-dot:hover {
+  border: 1px solid black;
+}
+
+main .product-list > .container > .card .color-dot {
+  display: none;
+  padding: 1px;
+  border: 1px solid transparent;
+}
+
+main .product-list>.container>.card {
+  padding: 20px 10px;
+}
+
+main div:has(.product-list) {
+  width: 100%;
+  max-width: 1325px;
+  padding: 0;
+  margin: auto;
+}
+
+main .product-list>.container>.card .price::before {
+  content: 'Starting at $';
+}
+
+main .product-list>.container .card .color-dot {
+  height: 16px;
+  width: 16px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 3px;
+}
+
+main .product-list > .container .color-swatch {
+  min-height: 32px;
+  display: flex;
+  flex-direction: row;
+}
+
+main .product-list > .container > .card .color-swatch:hover .color-dot {
+  display: block;
+}
+
