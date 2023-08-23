@@ -49,8 +49,9 @@ function buildHeroBlock(main) {
 
   const picture = main.querySelector('picture');
   const video = document.createElement('div');
-  if (!picture) {
-    const anchor = main.querySelector('a');
+  const anchor = main.querySelector('a');
+
+  if (!picture && main.querySelector('h1')) {
     main.querySelector('p > a').remove();
     addVideo(video, anchor.href);
     main.prepend(video.querySelector('video'));
