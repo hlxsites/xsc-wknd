@@ -13,3 +13,45 @@ footer .footer {
 footer .footer p {
   margin: 0;
 }
+
+footer .footer ul {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  padding: 0;
+}
+
+footer .footer ul > li {
+  font-family: tertiary-font, notosans-regular, sans-serif;
+  font-size: 26px;
+  line-height: 22px;
+  text-transform: capitalize;
+  font-stretch: extra-expanded;
+}
+
+footer .footer ul > li > a {
+  display: block;
+    width: 215px;
+    height: 25px;
+    background: #FA6600;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    font-size: 21px;
+}
+
+footer .footer p::before {
+  content:"";
+  display:block;
+  width: 100%;
+  max-width:100%;
+  border-bottom: 0.3px solid #757575;
+  margin: 0 auto 20px;
+}
+
+footer .footer p {
+  padding-top: 10px;
+}

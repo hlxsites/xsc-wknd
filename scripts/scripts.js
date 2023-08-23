@@ -16,6 +16,22 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
+export function addVideo(element, href) {
+  element.innerHTML = `<video loop muted playsInline>
+    <source data-src="${href}" type="video/mp4" />
+  </video>`;
+  const video = element.querySelector('video');
+  const source = element.querySelector('video > source');
+
+  source.src = source.dataset.src;
+  video.load();
+  video.addEventListener('loadeddata', () => {
+    video.setAttribute('autoplay', true);
+    video.setAttribute('data-loaded', true);
+    video.play();
+  });
+}
+
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -35,11 +51,22 @@ function buildHeroBlock(main) {
   }
 
   const picture = main.querySelector('picture');
+  const video = document.createElement('div');
+  if(!picture) {
+    const anchor = main.querySelector('a');
+    main.querySelector('p > a').remove();
+    addVideo(video, anchor.href);
+    main.prepend(video.querySelector('video'));
+  }
   // eslint-disable-next-line no-bitwise
   if (content && picture && (content.compareDocumentPosition(picture)
     & Node.DOCUMENT_POSITION_PRECEDING)) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [picture, content] }));
+    main.prepend(section);
+  }else if (content && video) {
+    const section = document.createElement('div');
+    section.append(buildBlock('hero', { elems: [main.querySelector('video'), content] }));
     main.prepend(section);
   }
 }
@@ -168,23 +195,6 @@ async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
-}
-
-export function addVideo(element, href) {
-  element.innerHTML = `<video loop muted playsInline>
-    <source data-src="${href}" type="video/mp4" />
-  </video>`;
-
-  const video = element.querySelector('video');
-  const source = element.querySelector('video > source');
-
-  source.src = source.dataset.src;
-  video.load();
-  video.addEventListener('loadeddata', () => {
-    video.setAttribute('autoplay', true);
-    video.setAttribute('data-loaded', true);
-    video.play();
-  });
 }
 
 export async function fetchJson(href) {
