@@ -1,13 +1,14 @@
 /* block specific CSS goes here */
 
-main .hero-container>div {
+main .hero-container > div {
   max-width: unset;
 }
-
+  
 main .hero-container {
   padding: 0;
+  background: transparent;
 }
-
+  
 main .hero {
   position: relative;
   padding: 32px;
@@ -16,13 +17,18 @@ main .hero {
 }
 
 main .hero .hero-content {
-  text-align: left;
+  text-align: center;
   color: white;
   margin: 0;
   position: absolute;
   top: 50%;
-  left: 19%;
+  left: 50%;
   transform: translate(-50%, -50%);
+}
+
+
+main .hero .hero-content h2 {
+  margin: 10px;
 }
 
 main .hero .hero-content .seperator {
@@ -35,9 +41,10 @@ main .hero .hero-content .seperator {
   margin: auto;
 }
 
-main .hero picture, main .hero video {
+main .hero picture {
   position: absolute;
-  z-index: -1;
+  position: fixed;
+  z-index: -100;
   top: calc(var(--nav-height) * -1);
   left: 0;
   bottom: 0;
@@ -50,19 +57,4 @@ main .hero img {
   object-fit: cover;
   width: 100%;
   height: 100%;
-}
-
-main .hero h1 {
-  font-size: 30px;
-  font-family: primary-font-heavy, notosans-bold, sans-serif;
-  line-height: 38px;
-  font-weight: 500;
-  margin: 10px;
-}
-
-main .hero h2 {
-  font-family: tertiary-font, notosans-regular, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  margin: 10px;
 }

@@ -1,79 +1,6 @@
 /* below the fold CSS goes here */
 
 @font-face {
-  font-family: Primary-Font;
-  font-style: normal;
-  font-weight: 400;
-  src: local("Primary-Font"), url("https://use.typekit.net/af/2727fa/00000000000000003b9b4448/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"), url("https://use.typekit.net/af/2727fa/00000000000000003b9b4448/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"), url("https://use.typekit.net/af/2727fa/00000000000000003b9b4448/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Primary-Font-Italic;
-  font-style: italic;
-  font-weight: 400;
-  src: local("Primary-Font-Italic"), url("https://use.typekit.net/af/45aa8b/00000000000000003b9b4449/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"), url("https://use.typekit.net/af/45aa8b/00000000000000003b9b4449/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"), url("https://use.typekit.net/af/45aa8b/00000000000000003b9b4449/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Primary-Font-Bold;
-  font-style: normal;
-  font-weight: 600;
-  src: local("Primary-Font-Bold"), url("https://use.typekit.net/af/a9cf1b/00000000000000003b9b444c/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff2"), url("https://use.typekit.net/af/a9cf1b/00000000000000003b9b444c/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff"), url("https://use.typekit.net/af/a9cf1b/00000000000000003b9b444c/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Primary-Font-Heavy;
-  font-style: normal;
-  font-weight: 800;
-  src: local("Primary-Font-Heavy"), url("https://use.typekit.net/af/e6e225/00000000000000003b9b444e/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3") format("woff2"), url("https://use.typekit.net/af/e6e225/00000000000000003b9b444e/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3") format("woff"), url("https://use.typekit.net/af/e6e225/00000000000000003b9b444e/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n8&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Secondary-Font;
-  font-style: normal;
-  font-weight: 400;
-  src: local("Secondary-Font"), url("https://use.typekit.net/af/a45f7b/00000000000000003b9b1f71/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"), url("https://use.typekit.net/af/a45f7b/00000000000000003b9b1f71/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"), url("https://use.typekit.net/af/a45f7b/00000000000000003b9b1f71/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Secondary-Font-Bold;
-  font-style: normal;
-  font-weight: 600;
-  src: local("Secondary-Font-Bold"), url("https://use.typekit.net/af/40578a/00000000000000003b9b1f73/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff2"), url("https://use.typekit.net/af/40578a/00000000000000003b9b1f73/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff"), url("https://use.typekit.net/af/40578a/00000000000000003b9b1f73/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Tertiary-Font;
-  font-style: normal;
-  font-weight: 400;
-  src: local("Tertiary-Font"), url("https://use.typekit.net/af/2727fa/00000000000000003b9b4448/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"), url("https://use.typekit.net/af/2727fa/00000000000000003b9b4448/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"), url("https://use.typekit.net/af/2727fa/00000000000000003b9b4448/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Tertiary-Font-Italic;
-  font-style: italic;
-  font-weight: 400;
-  src: local("Tertiary-Font-Italic"), url("https://use.typekit.net/af/45aa8b/00000000000000003b9b4449/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"), url("https://use.typekit.net/af/45aa8b/00000000000000003b9b4449/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"), url("https://use.typekit.net/af/45aa8b/00000000000000003b9b4449/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
-  font-display: swap
-}
-
-@font-face {
-  font-family: Tertiary-Font-Bold;
-  font-style: normal;
-  font-weight: 600;
-  src: local("Tertiary-Font-Bold"), url("https://use.typekit.net/af/a9cf1b/00000000000000003b9b444c/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff2"), url("https://use.typekit.net/af/a9cf1b/00000000000000003b9b444c/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff"), url("https://use.typekit.net/af/a9cf1b/00000000000000003b9b444c/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("opentype");
-  font-display: swap
-}
-
-/* 
-@font-face {
   font-display: block;
   font-family: wknd-icon-font;
   font-style: normal;
@@ -98,4 +25,3 @@
   font-weight: 400;
   src: url("/fonts/AdobeClean-Light.ttf") format("truetype")
 }
- */
