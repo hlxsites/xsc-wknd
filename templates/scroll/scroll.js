@@ -1,5 +1,6 @@
 import { addElement } from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/lib-franklin.js';
+// import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 async function fetchAdventures(query, cursor) {
   const url = cursor ? new URL(`${query}${cursor}`) : new URL(`${query}`);
@@ -34,18 +35,23 @@ async function fetchAdventures(query, cursor) {
 export default async function decorate(block) {
   const scrollContainer = block.querySelector('.scroll-container');
   const query = scrollContainer.getAttribute('data-query');
-  let adventures = await fetchAdventures(query);
-  let cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
-  let hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
   const cardContainer = addElement('div', { class: 'card-container' });
   scrollContainer.append(cardContainer);
-  let lastCard = scrollContainer.lastElementChild;
+  const lastCard = scrollContainer.lastElementChild;
 
   let observer;
+  let adventures;
+  let cursor;
+  let hasNext = true;
   const callback = async (array) => {
     array.forEach(async (card) => {
-      if (card.isIntersecting) {
+      if (card.isIntersecting && hasNext) {
+        adventures = await fetchAdventures(query, cursor);
+        cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
+        hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
         adventures.data.adventurePaginated.edges.forEach((adventure) => {
+        // console.log(createOptimizedPicture(`${getMetadata('urn:adobe:aem:editor:aemconnection')}${adventure.node.primaryImage.dm}`));
+
           const cardContent = `
             <div class='card-image'>
               <img src='${getMetadata('urn:adobe:aem:editor:aemconnection')}${adventure.node.primaryImage.dm}' />
@@ -59,14 +65,7 @@ export default async function decorate(block) {
           cardContainer.append(cardElem);
         });
         observer.unobserve(lastCard);
-        if (hasNext) {
-          console.log('requesting content');
-          adventures = await fetchAdventures(query, cursor);
-          cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
-          hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
-          lastCard = scrollContainer.lastElementChild;
-          observer.observe(scrollContainer.lastElementChild);
-        }
+        observer.observe(scrollContainer.querySelector('.card:last-child'));
       }
     });
   };
