@@ -1,0 +1,60 @@
+/* main {
+  background-color: #fff;
+  position: relative;
+  z-index: 3;
+} */
+main .section {
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  top:0;
+}
+
+main .scroll-container {
+  margin-top: -20px;
+  position: relative;
+  z-index:-99;
+}
+main .scroll-container > div > .card {
+  height: 90vh;
+  background-color: transparent;
+  margin: 0;
+  position: relative;
+  display: inline-block;  
+}
+
+main .scroll-container .card-container {
+  background: transparent;
+}
+
+main .scroll-container .card-content {
+  height: 90vh;
+  position: absolute;
+  background: rgb(0, 0, 0, 30%);
+  color: #fff;
+  top:50px;
+  left:1em;
+  padding: 50px 100px;
+  width: 400px;
+}
+
+main .scroll-container .card .card-image {
+  width: 100vw;
+  /* z-index: -1;
+  position: fixed;
+  top:0;
+  animation: fadeIn 5s; */
+}
+main .scroll-container .card img {
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  main .scroll-container .card-container {
+    max-width: unset;
+    width: 100%;
+    margin: auto;
+    background: transparent;
+  }
+}

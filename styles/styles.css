@@ -15,20 +15,18 @@
   --link-color: #202020;
   --link-hover-color: #0D0D0D;
   --link-selected-color: #3C3C3C;
-  --background-color: rgb(255 255 255 / 95%);
+  --background-color: rgb(4 25 45 / 55%);
   --background-color-light: #fff;
   --overlay-background-color: #eee;
-  --highlight-background-color: #EEECEB;
+  --highlight-background-color: #ffc719;
   --text-color: #000;
-  --text-color-light: #fff;
-  --background-color-nav: rgb(253 253 254 / 95%);
-  --nav-color: #000;
-  --nav-font: secondary-font-bold, notosans-bold, sans-serif;
+  --background-color-nav: rgb(255 255 255 / 95%);
+  --nav-color: #fff;
   --background-color-dark: #000;
 
   /* fonts */
-  --body-font-family: tertiary-font, notosans-regular (woff2), sans-serif;
-  --heading-font-family: secondary-font-bold, notosans-bold (woff2), sans-serif
+  --body-font-family: adobe-clean-light, 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
+  --heading-font-family: adobe-clean-regular, 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
@@ -94,7 +92,7 @@ h1 {
 }
 
 h2 { 
-  font-size: var(--heading-font-size-xl); 
+  font-size: var(--heading-font-size-l); 
   text-shadow: 1px 1px 2px #000;
 }
 

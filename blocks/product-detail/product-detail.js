@@ -7,7 +7,6 @@ export default async function decorate(block) {
 
   a.parentElement.parentElement.remove();
   const product = getMetadata('og:title');
- 
   const productDetail = addElement('div', { class: 'product-detail' });
   products.data.forEach((productCard) => {
     if (productCard.name === product) {
@@ -20,7 +19,5 @@ export default async function decorate(block) {
       productDetail.append(productImage);
     }
   });
-  
-
   block.append(productDetail);
 }

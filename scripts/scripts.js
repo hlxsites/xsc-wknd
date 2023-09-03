@@ -44,6 +44,9 @@ function buildHeroBlock(main) {
 
   const h2 = main.querySelector('h2');
   if (h2) {
+    const seperator = document.createElement('span');
+    seperator.classList.add('seperator');
+    content.append(seperator);
     content.append(h2);
   }
 
@@ -74,6 +77,7 @@ function buildHeroBlock(main) {
  */
 const TEMPLATE_LIST = [
   'adventures',
+  'scroll',
 ];
 
 /**
