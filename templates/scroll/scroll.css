@@ -16,30 +16,70 @@ main .scroll-container {
   z-index:-99;
 }
 main .scroll-container > div > .card {
-  height: 90vh;
+  /* height: 90vh; */
   background-color: transparent;
-  margin: 0;
+  /* margin: 0; */
   position: relative;
-  display: inline-block;  
+  /* display: inline-block;   */
+  display: flex;
+  flex-direction: column;
 }
 
-main .scroll-container .card-container {
-  background: transparent;
+main .scroll-container {
+  background: #141414;
+  text-align: center;
 }
 
 main .scroll-container .card-content {
-  height: 90vh;
-  position: absolute;
   background: rgb(0, 0, 0, 30%);
   color: #fff;
   top:50px;
   left:1em;
   padding: 50px 100px;
-  width: 400px;
+  z-index:1;
+  text-align: left;
+  max-width: 1200px;
+  margin: auto;
+}
+
+main .scroll-container .card-content .detail-info-rail {
+  display: flex;
+  background: #dbff00;
+  border-radius: 16px;
+  align-items: flex-start;
+  padding: 24px 40px;
+  grid-column-gap: 80px;
+  -webkit-column-gap: 80px;
+  column-gap: 80px;
+  justify-content: space-evenly;
+  margin: 40px 0;
+}
+
+main .scroll-container .card-content h6 {
+  color: rgba(244,244,244,.4);
+  font-size: 12px;
+  text-transform: inherit;
+  margin: 0 0 8px;
+}
+
+main .scroll-container .card-content .detail-info-rail h6 {
+  color: rgba(0,0,0,.4);
+}
+
+main .scroll-container .card-content span {
+  line-height: 24px;
+  color: #141414;
+}
+
+main .scroll-container .card-image.fixed {
+  position: fixed;
+  top:2px;
 }
 
 main .scroll-container .card .card-image {
   width: 100vw;
+  position: sticky;
+  top:2px;
   /* z-index: -1;
   position: fixed;
   top:0;

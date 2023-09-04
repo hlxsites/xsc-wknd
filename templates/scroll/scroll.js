@@ -1,6 +1,5 @@
 import { addElement } from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/lib-franklin.js';
-// import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 async function fetchAdventures(query, cursor) {
   const url = cursor ? new URL(`${query}${cursor}`) : new URL(`${query}`);
@@ -36,6 +35,8 @@ export default async function decorate(block) {
   const scrollContainer = block.querySelector('.scroll-container');
   const query = scrollContainer.getAttribute('data-query');
   const cardContainer = addElement('div', { class: 'card-container' });
+  const spinner = addElement('img', {}, { src: '../../icons/Spin-1s-200px.gif' });
+  cardContainer.append(spinner);
   scrollContainer.append(cardContainer);
   const lastCard = scrollContainer.lastElementChild;
 
@@ -50,18 +51,37 @@ export default async function decorate(block) {
         cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
         hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
         adventures.data.adventurePaginated.edges.forEach((adventure) => {
-        // console.log(createOptimizedPicture(`${getMetadata('urn:adobe:aem:editor:aemconnection')}${adventure.node.primaryImage.dm}`));
+          const pattern = `
+          <div class='card-image'>
+            <img src='${getMetadata('urn:adobe:aem:editor:aemconnection')}${adventure.node.primaryImage.dm}' />
+          </div> 
+          <div class='card-content'>
+            <h5>${adventure.node.title}</h5>
+            <div id='description'>${adventure.node.description.html}</div>
+            <div class='detail-info-rail'>
+              <div class='detail-info'>
+                <h6>Adventure Type</h6>
+                <span>${adventure.node.adventureType}</span>
+              </div>
+              <div class='detail-info'>
+                <h6>Trip Length</h6>
+                <span>${adventure.node.tripLength}</span>
+              </div>
+              <div class='detail-info'>
+                <h6>Difficulty</h6>
+                <span>${adventure.node.difficulty}</span>
+              </div>
+              <div class='detail-info'>
+                <h6>Group Size</h6>
+                <span>${adventure.node.groupSize}</span>
+              </div>
+            </div>
+            <h6>Itinerary</h6>
+            <div id='itinerary'>${adventure.node.itinerary.html}</div>
+          </div>`;
 
-          const cardContent = `
-            <div class='card-image'>
-              <img src='${getMetadata('urn:adobe:aem:editor:aemconnection')}${adventure.node.primaryImage.dm}' />
-            </div> 
-            <div class='card-content'>
-              <h5>${adventure.node.title}</h5>
-              <div class='description'>${adventure.node.description.html}</div>
-            </div>`;
-
-          const cardElem = addElement('div', { class: 'card', id: adventure.node.slug }, { innerHTML: cardContent });
+          const cardElem = addElement('div', { class: 'card', id: adventure.node.slug }, { innerHTML: pattern });
+          spinner.remove();
           cardContainer.append(cardElem);
         });
         observer.unobserve(lastCard);
