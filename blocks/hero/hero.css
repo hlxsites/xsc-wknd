@@ -29,6 +29,7 @@ main .hero .hero-content {
 
 main .hero .hero-content h2 {
   margin: 10px;
+  text-shadow: 1px 1px 2px #000;
 }
 
 main .hero .hero-content .seperator {

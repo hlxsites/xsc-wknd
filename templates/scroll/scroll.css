@@ -1,33 +1,13 @@
-/* main {
-  background-color: #fff;
-  position: relative;
-  z-index: 3;
-} */
-main .section {
-  padding: 0;
-  margin: 0;
-  background-color: #fff;
-  top:0;
-}
-
 main .scroll-container {
   margin-top: -20px;
   position: relative;
   z-index:-99;
 }
 main .scroll-container > div > .card {
-  /* height: 90vh; */
   background-color: transparent;
-  /* margin: 0; */
   position: relative;
-  /* display: inline-block;   */
   display: flex;
   flex-direction: column;
-}
-
-main .scroll-container {
-  background: #141414;
-  text-align: center;
 }
 
 main .scroll-container .card-content {
@@ -35,11 +15,22 @@ main .scroll-container .card-content {
   color: #fff;
   top:50px;
   left:1em;
-  padding: 50px 100px;
+  padding: 5px 10px;
   z-index:1;
   text-align: left;
   max-width: 1200px;
   margin: auto;
+  display: flex;
+  flex-direction: row;
+  column-gap: 76px;
+}
+
+main .scroll-container .card-content a.button {
+  z-index: 2;
+}
+
+main .scroll-container h3 {
+  color: var(--link-text-color);
 }
 
 main .scroll-container .card-content .detail-info-rail {
@@ -80,10 +71,6 @@ main .scroll-container .card .card-image {
   width: 100vw;
   position: sticky;
   top:2px;
-  /* z-index: -1;
-  position: fixed;
-  top:0;
-  animation: fadeIn 5s; */
 }
 main .scroll-container .card img {
   object-fit: cover;
@@ -96,5 +83,18 @@ main .scroll-container .card img {
     width: 100%;
     margin: auto;
     background: transparent;
+  }
+
+  main .scroll-container .card-content {
+    display: flex;
+    flex-direction: row;
+    column-gap: 76px;
+    padding: 50px 100px;
+  }
+
+  main .scroll-container .card-content > div:nth-child(2) {
+    text-align: center;
+    padding: 20px;
+    width: 20%;
   }
 }

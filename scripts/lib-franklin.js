@@ -476,10 +476,10 @@ export async function loadBlocks(main) {
  * @param {Array} [breakpoints] Breakpoints and corresponding params (eg. width)
  * @returns {Element} The picture element
  */
-export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]) {
+export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }], fqd = false) {
   const url = new URL(src, window.location.href);
   const picture = document.createElement('picture');
-  const { pathname } = url;
+  const pathname = fqd ? url.href : url.pathname;
   const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
 
   // webp
@@ -487,7 +487,8 @@ export function createOptimizedPicture(src, alt = '', eager = false, breakpoints
     const source = document.createElement('source');
     if (br.media) source.setAttribute('media', br.media);
     source.setAttribute('type', 'image/webp');
-    source.setAttribute('srcset', `${pathname}?width=${br.width}&format=webply&optimize=medium`);
+    const val = fqd ? `${pathname}${br.width}&format=webply&optimize=medium` : `${pathname}?width=${br.width}&format=webply&optimize=medium`;
+    source.setAttribute('srcset', val);
     picture.appendChild(source);
   });
 

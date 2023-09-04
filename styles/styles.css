@@ -10,11 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
- :root {
+:root {
   /* colors */
   --link-color: #202020;
-  --link-hover-color: #0D0D0D;
+  --link-hover-color: #666;
   --link-selected-color: #3C3C3C;
+  --link-text-color: #eee;
   --background-color: rgb(4 25 45 / 55%);
   --background-color-light: #fff;
   --overlay-background-color: #eee;
@@ -76,8 +77,12 @@ header {
   height: var(--nav-height);
 }
 
-h1, h2, h3,
-h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: 1.25;
@@ -86,22 +91,46 @@ h4, h5, h6 {
   scroll-margin: calc(var(--nav-height) + 1em);
 }
 
-h1 { 
-  font-size: var(--heading-font-size-xxl); 
+h1 {
+  font-size: var(--heading-font-size-xxl);
   text-shadow: 1px 1px 2px #000;
 }
 
-h2 { 
-  font-size: var(--heading-font-size-l); 
-  text-shadow: 1px 1px 2px #000;
+h2 {
+  font-size: var(--heading-font-size-l);
 }
 
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
-h5 { font-size: var(--heading-font-size-s) }
-h6 { font-size: var(--heading-font-size-xs) }
+h3 {
+  font-size: var(--heading-font-size-l);
+  color: #000;
+}
 
-p, dl, ol, ul, pre, blockquote {
+h4 {
+  font-size: var(--heading-font-size-m);
+}
+
+.underline h3::after {
+  border-bottom: 2px solid var(--highlight-background-color);
+  content: "";
+  display: block;
+  padding-top: 8px;
+  width: 84px;
+}
+
+h5 {
+  font-size: var(--heading-font-size-s)
+}
+
+h6 {
+  font-size: var(--heading-font-size-xs)
+}
+
+p,
+dl,
+ol,
+ul,
+pre,
+blockquote {
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -113,12 +142,15 @@ hr {
   border-bottom: 1px solid var(--overlay-background-color);
 }
 
-code, pre, samp {
+code,
+pre,
+samp {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
 }
 
-code, samp {
+code,
+samp {
   padding: .125em;
 }
 
@@ -145,39 +177,43 @@ a:hover {
 }
 
 /* buttons */
-a.button:any-link, button {
+a.button:any-link,
+button {
   font-family: var(--body-font-family);
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
   border: 2px solid transparent;
-  
-  /* padding: 5px 30px; */
+  padding: 5px 30px;
   text-align: center;
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
-  color: var(--background-color);
-  
-  /* background-color: var(--link-color); */
+  color: var(--link-text-color);
+  background-color: var(--link-color);
   margin: 16px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 30px;
+  border-radius: 3px;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus  {
+a.button:hover,
+a.button:focus,
+button:hover,
+button:focus {
   background-color: var(--link-hover-color);
   cursor: pointer;
 }
 
-button:disabled, button:disabled:hover {
+button:disabled,
+button:disabled:hover {
   background-color: var(--overlay-background-color);
   cursor: unset;
 }
 
-a.button.secondary, button.secondary {
+a.button.secondary,
+button.secondary {
   background-color: unset;
   border: 2px solid currentcolor;
   color: var(--text-color)
@@ -226,7 +262,7 @@ main img {
 
 .icon {
   display: inline-block;
-  fill:var(--nav-color);
+  fill: var(--nav-color);
   height: 24px;
   width: 24px;
 }
@@ -237,8 +273,12 @@ main img {
 }
 
 main .section {
-  padding: 64px 16px;
+  padding: 32px 0;
+  margin: 0;
+  background-color: #fff;
+  top: 0;
 }
+
 
 /* main:has(.section.overview), main:has(.section.itinerary), main:has(.section.what-to-bring) {
   display: flex;
@@ -247,12 +287,12 @@ main .section {
 
 @media (min-width: 600px) {
   main .section {
-    padding: 64px 32px;
+    padding: 32px 0;
   }
 }
 
 @media (min-width: 900px) {
-  .section > div {
+  .section>div {
     max-width: 1200px;
     margin: auto;
   }
