@@ -30,6 +30,10 @@ footer .footer ul > li {
   font-stretch: extra-expanded;
 }
 
+footer .footer a {
+  color: var(--link-text-color);
+}
+
 footer .footer ul > li > a {
   display: block;
     width: 215px;
@@ -38,7 +42,6 @@ footer .footer ul > li > a {
     padding: 10px;
     text-align: center;
     border-radius: 5px;
-    color: white;
     font-weight: bold;
     line-height: 25px;
     font-size: 21px;

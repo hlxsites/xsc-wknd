@@ -240,9 +240,9 @@ export function addElement(type, attributes, values = {}) {
 
 loadPage();
 
-document.querySelectorAll('meta').forEach((m) => {
-  const prop = m.getAttribute('property');
-  if(prop && prop.startsWith('urn:adobe')) {
-    m.setAttribute('content', `aem:${m.getAttribute('content')}`);
-  }
-})
+// document.querySelectorAll('meta').forEach((m) => {
+//   const prop = m.getAttribute('property');
+//   if(prop && prop.startsWith('urn:adobe')) {
+//     m.setAttribute('content', `aem:${m.getAttribute('content')}`);
+//   }
+// })
