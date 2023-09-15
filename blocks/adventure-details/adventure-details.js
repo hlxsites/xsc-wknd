@@ -75,7 +75,6 @@ export default async function decorate(block) {
     const tabPanel = document.createElement('div');
     tabPanel.classList.add('tab-panel');
     tabPanel.classList.add(s.toLowerCase());
-    console.log(adventure);
     tabPanel.innerHTML = `<div class='content-panel'>${adventure[s].html}</div>`;
 
     const sideBar = document.createElement('div');
