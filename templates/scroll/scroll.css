@@ -1,7 +1,7 @@
 main .scroll-container {
   margin-top: -20px;
   position: relative;
-  z-index:-99;
+  /* z-index:-99; */
 }
 main .scroll-container > div > .card {
   background-color: transparent;

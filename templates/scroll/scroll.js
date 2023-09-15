@@ -66,6 +66,9 @@ const defaultHeaderStyle = {
 };
 
 async function fetchAdventures(query, cursor) {
+  const origin = window.location.origin;
+  if(origin.includes('.live') || origin.includes('.page')) query = query.replace('author', 'publish');
+
   const url = cursor ? new URL(`${query}${cursor}`) : new URL(`${query}`);
 
   try {
@@ -168,8 +171,8 @@ export default async function decorate(block) {
   const lastCard = scrollContainer.lastElementChild;
 
   let observer;
-  let adventures;
   let cursor;
+  let adventures = await fetchAdventures(query, cursor);
   let hasNext = true;
   const callback = async (array) => {
     array.forEach(async (card) => {
@@ -207,7 +210,7 @@ export default async function decorate(block) {
               <h6>Itinerary</h6>
               <div id='itinerary'>${adventure.node.itinerary.html}</div>
             </div>
-            <div><a href='/' class='button primary'>Book Now</a></div>
+            <div><a href='/adventures' class='button primary'>Book Now</a></div>
           </div>`;
 
           const editorProps = {
