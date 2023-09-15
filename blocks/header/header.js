@@ -120,6 +120,13 @@ export default async function decorate(block) {
             navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
           }
         });
+        if (navSection.querySelector('ul')) {
+          navSection.querySelectorAll('li').forEach((li) => {
+            const path = li.querySelector('a').getAttribute('href').replace('/', '');
+            const { pathname } = window.location;
+            li.querySelector('a').setAttribute('href', `${pathname}${path}`);
+          });
+        }
       });
     }
 
