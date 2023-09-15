@@ -55,7 +55,7 @@ export default async function decorate(block) {
   Object.keys(TABS).forEach((s) => {
     const input = document.createElement('input');
     input.setAttribute('type', 'radio');
-    input.setAttribute('id', `tab-${s}`);
+    input.setAttribute('id', `tab-${s.toLowerCase()}`);
     input.setAttribute('name', 'tab');
     input.classList.add('tab');
     if (first) {
@@ -66,7 +66,7 @@ export default async function decorate(block) {
     block.append(input);
 
     const lbl = document.createElement('label');
-    lbl.setAttribute('for', `tab-${s}`);
+    lbl.setAttribute('for', `tab-${s.toLowerCase()}`);
     lbl.textContent = TABS[s];
     block.append(lbl);
   });
@@ -74,7 +74,7 @@ export default async function decorate(block) {
   Object.keys(TABS).forEach((s) => {
     const tabPanel = document.createElement('div');
     tabPanel.classList.add('tab-panel');
-    tabPanel.classList.add(s);
+    tabPanel.classList.add(s.toLowerCase());
     tabPanel.innerHTML = `<div class='content-panel'>${adventure[s].html}</div>`;
 
     const sideBar = document.createElement('div');
