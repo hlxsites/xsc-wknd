@@ -52,8 +52,11 @@ export default async function decorate(block) {
         cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
         hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
 
+        const { origin } = window.location;
+        const aem = (origin.includes('.live') || origin.includes('.page')) ? getMetadata('urn:adobe:aem:editor:aemconnection').replace('author', 'publish') : getMetadata('urn:adobe:aem:editor:aemconnection');
+
         adventures.data.adventurePaginated.edges.forEach((adventure) => {
-          const pic = createOptimizedPicture(`${getMetadata('urn:adobe:aem:editor:aemconnection')}${adventure.node.primaryImage.dm}`, adventure.node.slug, true, [{ media: '(min-width: 600px)', width: '2000' }], true);
+          const pic = createOptimizedPicture(`${aem}${adventure.node.primaryImage.dm}`, adventure.node.slug, true, [{ media: '(min-width: 600px)', width: '2000' }], true);
           const pattern = `
           <div class='card-image'></div> 
           <div class='card-content'>
