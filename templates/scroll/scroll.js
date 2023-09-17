@@ -34,15 +34,6 @@ async function fetchAdventures(query, cursor) {
   }
 }
 
-const bookNow = (adventure) => {
-  const html = `<div class="modal">
-    <span class="close">&times;</span>
-    <p>${adventure}.</p>
-  </div>`;
-
-  return html
-};
-
 export default async function decorate(block) {
   const scrollContainer = block.querySelector('.scroll-container');
   const query = scrollContainer.getAttribute('data-query');
@@ -108,13 +99,6 @@ export default async function decorate(block) {
 
           const cardElem = addElement('div', editorProps, { innerHTML: pattern });
           const button = addElement('a', { class: 'button primary', href: '#' }, { innerText: 'Book Now' });
-          // const modal = addElement('div', {class: 'modal-container book'}, {innerHTML: bookNow(adventure.node.slug)});
-
-          // modal.querySelector('.close').addEventListener('click', ((e) => {
-          //   const parent = e.target.parentElement.parentElement;
-          //   parent.style.display = 'none';
-          // }));
-
           button.addEventListener('click', ((e) => {
             e.preventDefault();
             document.querySelector('.form.modal').classList.add('visible');

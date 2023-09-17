@@ -181,8 +181,8 @@ export default async function decorate(block) {
   if (form) {
     form.parentElement.replaceWith(await createForm(form.href));
     [...block.classList].forEach((cls) => {
-      if(cls==='modal') {
-        const close = addElement('a', {class:'close', href:'#'});
+      if (cls === 'modal') {
+        const close = addElement('a', { class: 'close', href: '#' });
         close.addEventListener('click', ((e) => {
           e.preventDefault();
           block.classList.remove('visible');
@@ -190,7 +190,5 @@ export default async function decorate(block) {
         block.querySelector('div').append(close);
       }
     });
-   
   }
-  
 }

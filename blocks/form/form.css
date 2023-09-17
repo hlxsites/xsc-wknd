@@ -20,11 +20,11 @@ main .form.modal > div {
   position: relative;
   flex-direction: row;
   width: 70%;
-  background-color: rgb(255 255 255 / .9);
+  background-color: rgb(255 255 255 / 90%);
   border-radius: 10px;
   margin: auto;
   justify-self: center;
-  box-shadow: 2px 2px rgb(255 255 255 / .3);
+  box-shadow: 2px 2px rgb(255 255 255 / 30%);
 }
 
 main .form.modal form {
@@ -69,7 +69,6 @@ main .form.modal .close:hover,
 main .form.modal .close:focus {
   background: var(--focus);
   border-color: var(--focus);
-  /* transform: translateY(-.2rem); */
   color: white;
 }
 
