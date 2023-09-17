@@ -34,6 +34,15 @@ async function fetchAdventures(query, cursor) {
   }
 }
 
+const bookNow = (adventure) => {
+  const html = `<div class="modal">
+    <span class="close">&times;</span>
+    <p>${adventure}.</p>
+  </div>`;
+
+  return html
+};
+
 export default async function decorate(block) {
   const scrollContainer = block.querySelector('.scroll-container');
   const query = scrollContainer.getAttribute('data-query');
@@ -45,10 +54,12 @@ export default async function decorate(block) {
   let cursor;
   let adventures = await fetchAdventures(query, cursor);
   let hasNext = true;
+  let initial = true;
   const callback = async (array) => {
     array.forEach(async (card) => {
       if (card.isIntersecting && hasNext) {
-        adventures = await fetchAdventures(query, cursor);
+        if (initial) initial = false;
+        else adventures = await fetchAdventures(query, cursor);
         cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
         hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
 
@@ -84,7 +95,7 @@ export default async function decorate(block) {
               <h6>Itinerary</h6>
               <div id='itinerary'>${adventure.node.itinerary.html}</div>
             </div>
-            <div><a href='/adventures' class='button primary'>Book Now</a></div>
+            <div></div>
           </div>`;
 
           const editorProps = {
@@ -96,7 +107,21 @@ export default async function decorate(block) {
           };
 
           const cardElem = addElement('div', editorProps, { innerHTML: pattern });
+          const button = addElement('a', { class: 'button primary', href: '#' }, { innerText: 'Book Now' });
+          // const modal = addElement('div', {class: 'modal-container book'}, {innerHTML: bookNow(adventure.node.slug)});
+
+          // modal.querySelector('.close').addEventListener('click', ((e) => {
+          //   const parent = e.target.parentElement.parentElement;
+          //   parent.style.display = 'none';
+          // }));
+
+          button.addEventListener('click', ((e) => {
+            e.preventDefault();
+            document.querySelector('.form.modal').classList.add('visible');
+          }));
+
           cardElem.querySelector('.card-image').append(pic);
+          cardElem.querySelector('.card-content > div:last-child').append(button);
           cardContainer.append(cardElem);
         });
         observer.unobserve(lastCard);

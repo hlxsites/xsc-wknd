@@ -1,3 +1,5 @@
+import { addElement } from '../../scripts/scripts.js';
+
 function createSelect(fd) {
   const select = document.createElement('select');
   select.id = fd.Field;
@@ -177,6 +179,18 @@ async function createForm(formURL) {
 export default async function decorate(block) {
   const form = block.querySelector('a[href$=".json"]');
   if (form) {
-    form.replaceWith(await createForm(form.href));
+    form.parentElement.replaceWith(await createForm(form.href));
+    [...block.classList].forEach((cls) => {
+      if(cls==='modal') {
+        const close = addElement('a', {class:'close', href:'#'});
+        close.addEventListener('click', ((e) => {
+          e.preventDefault();
+          block.classList.remove('visible');
+        }));
+        block.querySelector('div').append(close);
+      }
+    });
+   
   }
+  
 }

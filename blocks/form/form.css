@@ -1,9 +1,84 @@
+main .form.modal {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color-transparent);
+  z-index: 6;
+  margin: 0;
+  display: grid;
+}
+
+main .form.modal.visible {
+  visibility: visible;
+}
+
+main .form.modal > div {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  width: 70%;
+  background-color: rgb(255 255 255 / .9);
+  border-radius: 10px;
+  margin: auto;
+  justify-self: center;
+  box-shadow: 2px 2px rgb(255 255 255 / .3);
+}
+
+main .form.modal form {
+  width: 60%;
+  margin: 10px 5px 10px 10px;
+}
+
+main .form.modal > div > div {
+  width: 40%;
+}
+
+main .form.modal img {
+  object-fit: cover;
+  height: 100%;
+  position: relative;
+  border-radius: 0 10px 10px 0;
+}
+
+main .form.modal .close {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 100rem;
+  background-color: var(--highlight-background-color);
+  color: inherit;
+  font-size: 18px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .2s;
+}
+
+main .form.modal .close::before {
+  content: '×';
+  transform: translateY(-.1rem);
+}
+
+main .form.modal .close:hover,
+main .form.modal .close:focus {
+  background: var(--focus);
+  border-color: var(--focus);
+  /* transform: translateY(-.2rem); */
+  color: white;
+}
+
 main .form input,
 main .form textarea,
 main .form select {
   border: 1px solid var(--overlay-background-color);
+  border-radius: 5px;
   padding: 11px;
-  border-radius: 0;
   width: 100%;
   max-width: 50rem;
   box-sizing: border-box;

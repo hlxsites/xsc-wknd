@@ -25,6 +25,13 @@
   --background-color-nav: rgb(255 255 255 / 95%);
   --nav-color: #fff;
   --background-color-dark: #000;
+  --background-color-transparent: rgb(0 0 0 / 60%);
+  --focus: hsl(60, 1%, 43%);
+  --input-background: #fff;
+  --button-background-color: #000;
+  --button-text-color: #fff;
+  --button-border-radius: 5px;
+  --button-padding: 5px 10px;
 
   /* fonts */
   --body-font-family: adobe-clean-light, 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
@@ -232,7 +239,7 @@ main input {
   box-sizing: border-box;
   border: 1px solid var(--text-color);
   color: var(--text-color);
-  background-color: var(--background-color);
+  background-color: var(--input-background);
 }
 
 main input:hover {
