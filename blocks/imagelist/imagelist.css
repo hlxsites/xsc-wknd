@@ -1,19 +1,21 @@
 main .imagelist {
-  display: flex;
-  flex-direction: row;
-  min-width: 1920px;
   min-height: 320px;
   white-space: nowrap;
   position: relative;
   overflow-x: scroll;
 }
 
+main .imagelist .cards {
+  display: flex;
+  flex-direction: row;
+}
+
 main .section.imagelist-container {
   padding: 64px 0;
 }
 
-main .imagelist::-webkit-scrollbar {
-  display: none;
+main .imagelist .cards::-webkit-scrollbar {
+  /* display: none; */
 }
 
 main .imagelist .card {
@@ -52,7 +54,7 @@ main .imagelist a:any-link {
   text-decoration: none;
 }
 
-main .imagelist .card h3 {
+main .imagelist .card h4 {
   background-color: rgb(0 0 0 / 45%);
   color: #fff;
   padding: 7px;
@@ -63,4 +65,25 @@ main .imagelist .card h3 {
   transform: translateX(-50%);
   bottom: 35px;
   font-size: medium;
+}
+
+main .imagelist .paddle {
+	position: absolute;
+	top: 40%;
+	bottom: 0;
+	width: 3em;
+  height: 3em;
+  z-index: 1;
+}
+
+main .imagelist .left-paddle {
+	left: 12px;
+}
+
+main .imagelist .right-paddle {
+	right: 12px;
+}
+
+main .imagelist .hidden {
+	display: none;
 }

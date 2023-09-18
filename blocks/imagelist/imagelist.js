@@ -1,8 +1,5 @@
-function getMetadata(name, doc) {
-  const attr = name && name.includes(':') ? 'property' : 'name';
-  const meta = [...doc.head.querySelectorAll(`meta[${attr}="${name}"]`)].map((m) => m.content).join(', ');
-  return meta || '';
-}
+import { getMetadata } from '../../scripts/lib-franklin.js';
+import { addElement } from '../../scripts/scripts.js';
 
 /**
  * Loads a fragment.
@@ -24,6 +21,7 @@ async function loadFragment(path) {
  * @param {HTMLElement} block The header block element
  */
 export default async function decorate(block) {
+  const cards = addElement('div', { class: 'cards' });
   [...block.children].forEach(async (div) => {
     const link = div.querySelector('div>div>a');
     const path = link ? link.getAttribute('href') : block.textContent.trim();
@@ -36,15 +34,40 @@ export default async function decorate(block) {
     const card = document.createElement('div');
     card.classList.add('card');
 
-    const h2 = document.createElement('h3');
-    h2.textContent = title;
+    const h4 = document.createElement('h4');
+    h4.textContent = title;
 
     card.appendChild(heroPicture);
-    card.appendChild(h2);
+    card.appendChild(h4);
+
     const a = document.createElement('a');
     a.href = doc.querySelector('link').href;
     a.appendChild(card);
 
-    block.appendChild(a);
+    cards.appendChild(a);
   });
+  block.append(cards);
+
+  const leftPaddle = addElement('button', { class: 'left-paddle paddle hidden' }, { innerText: '<' });
+  const rightPaddle = addElement('button', { class: 'right-paddle paddle' }, { innerText: '>' });
+
+  leftPaddle.addEventListener('click', ((e) => {
+    const cds = e.target.parentElement;
+    cds.scrollLeft -= 600;
+    rightPaddle.classList.remove('hidden');
+    rightPaddle.style.right = `${cards.scrollLeft + 12}px`;
+    if (!((cds.scrollWidth - cds.clientWidth) > cds.scrollLeft)) e.target.classList.add('hidden');
+    e.target.style.left = `${((cds.scrollLeft + 12))}px`;
+  }));
+
+  rightPaddle.addEventListener('click', ((e) => {
+    const cds = e.target.parentElement;
+    cds.scrollLeft += 600;
+    leftPaddle.classList.remove('hidden');
+    leftPaddle.style.left = `${cards.scrollLeft + 12}px`;
+    if (!((cds.scrollWidth - cds.clientWidth) > cds.scrollLeft)) e.target.classList.add('hidden');
+    e.target.style.right = `${((cds.scrollLeft - 12) * -1)}px`;
+  }));
+  block.prepend(leftPaddle);
+  block.append(rightPaddle);
 }

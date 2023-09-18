@@ -25,6 +25,13 @@
   --background-color-nav: rgb(255 255 255 / 95%);
   --nav-color: #fff;
   --background-color-dark: #000;
+  --background-color-transparent: rgb(0 0 0 / 60%);
+  --focus: hsl(60deg 1% 43%);
+  --input-background: #fff;
+  --button-background-color: #000;
+  --button-text-color: #fff;
+  --button-border-radius: 5px;
+  --button-padding: 5px 10px;
 
   /* fonts */
   --body-font-family: adobe-clean-light, 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
@@ -37,16 +44,30 @@
   --body-font-size-xs: 16px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 20px;
-  --heading-font-size-xs: 18px;
+  --heading-font-size-xxl: 32px;
+  --heading-font-size-xl: 24px;
+  --heading-font-size-l: 22px;
+  --heading-font-size-m: 20px;
+  --heading-font-size-s: 18px;
+  --heading-font-size-xs: 16px;
 
   /* nav height */
   --nav-height: 89px;
+  --hero-height: 60vh;
+  --h3-padding: 0 10px;
 
+}
+
+@media (min-width: 600px) {
+  :root {
+    --heading-font-size-xxl: 42px;
+    --heading-font-size-xl: 38px;
+    --heading-font-size-l: 32px;
+    --heading-font-size-m: 28px;
+    --heading-font-size-s: 18px;
+    --heading-font-size-xs: 16px;
+    --hero-height:70vh;
+  }
 }
 
 @media (min-width: 900px) {
@@ -57,6 +78,13 @@
     --heading-font-size-m: 30px;
     --heading-font-size-s: 24px;
     --heading-font-size-xs: 22px;
+    --hero-height:90vh;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --h3-padding: 0;
   }
 }
 
@@ -104,6 +132,7 @@ h2 {
 
 h3 {
   font-size: var(--heading-font-size-l);
+  padding: var(--h3-padding);
   color: #000;
 }
 
@@ -232,7 +261,7 @@ main input {
   box-sizing: border-box;
   border: 1px solid var(--text-color);
   color: var(--text-color);
-  background-color: var(--background-color);
+  background-color: var(--input-background);
 }
 
 main input:hover {

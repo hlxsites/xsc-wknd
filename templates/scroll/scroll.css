@@ -1,7 +1,7 @@
 main .scroll-container {
   margin-top: -20px;
   position: relative;
-  /* z-index:-99; */
+  min-height: 100vh;
 }
 main .scroll-container > div > .card {
   background-color: transparent;
@@ -11,7 +11,7 @@ main .scroll-container > div > .card {
 }
 
 main .scroll-container .card-content {
-  background: rgb(0, 0, 0, 30%);
+  background: var(--background-color-transparent);
   color: #fff;
   top:50px;
   left:1em;
@@ -21,16 +21,12 @@ main .scroll-container .card-content {
   max-width: 1200px;
   margin: auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   column-gap: 76px;
 }
 
 main .scroll-container .card-content a.button {
   z-index: 2;
-}
-
-main .scroll-container h3 {
-  color: var(--link-text-color);
 }
 
 main .scroll-container .card-content .detail-info-rail {
@@ -77,6 +73,56 @@ main .scroll-container .card img {
   width: 100%;
 }
 
+main .modal-container {
+  /* display: block; */
+  position: fixed;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--background-color-transparent);
+}
+
+/* Modal Content/Box */
+main .modal {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+main .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+main .close:hover,
+main .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (min-width: 1000px) {
+  main .scroll-container .card-content {
+    flex-direction: row;
+    column-gap: 76px;
+    padding: 50px 100px;
+  }
+
+  main .scroll-container .card-content > div:nth-child(2) {
+    text-align: center;
+    padding: unset;
+    width: 20%;
+  }
+}
+
 @media (min-width: 900px) {
   main .scroll-container .card-container {
     max-width: unset;
@@ -86,15 +132,14 @@ main .scroll-container .card img {
   }
 
   main .scroll-container .card-content {
-    display: flex;
-    flex-direction: row;
     column-gap: 76px;
     padding: 50px 100px;
   }
 
   main .scroll-container .card-content > div:nth-child(2) {
     text-align: center;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
     width: 20%;
   }
 }
