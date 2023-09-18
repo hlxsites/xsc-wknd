@@ -67,8 +67,6 @@ main .imagelist .card h4 {
   font-size: medium;
 }
 
-main .imagelist .paddles {}
-
 main .imagelist .paddle {
 	position: absolute;
 	top: 40%;

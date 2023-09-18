@@ -21,7 +21,7 @@ async function loadFragment(path) {
  * @param {HTMLElement} block The header block element
  */
 export default async function decorate(block) {
-  const cards = addElement('div', {class: 'cards'});
+  const cards = addElement('div', { class: 'cards' });
   [...block.children].forEach(async (div) => {
     const link = div.querySelector('div>div>a');
     const path = link ? link.getAttribute('href') : block.textContent.trim();
@@ -48,28 +48,26 @@ export default async function decorate(block) {
   });
   block.append(cards);
 
-  const leftPaddle = addElement('button', {class: 'left-paddle paddle hidden'}, {innerText: '<'});
-  const rightPaddle = addElement('button', {class: 'right-paddle paddle'}, {innerText: '>'});
+  const leftPaddle = addElement('button', { class: 'left-paddle paddle hidden' }, { innerText: '<' });
+  const rightPaddle = addElement('button', { class: 'right-paddle paddle' }, { innerText: '>' });
 
   leftPaddle.addEventListener('click', ((e) => {
-    const cards = e.target.parentElement;
-    cards.scrollLeft -= 600;
+    const cds = e.target.parentElement;
+    cds.scrollLeft -= 600;
     rightPaddle.classList.remove('hidden');
-    rightPaddle.style.right = `${cards.scrollLeft+12}px`;
-    if(!((cards.scrollWidth-cards.clientWidth) > cards.scrollLeft)) e.target.classList.add('hidden');
-    e.target.style.left = `${((cards.scrollLeft+12))}px`;
+    rightPaddle.style.right = `${cards.scrollLeft + 12}px`;
+    if (!((cds.scrollWidth - cds.clientWidth) > cds.scrollLeft)) e.target.classList.add('hidden');
+    e.target.style.left = `${((cds.scrollLeft + 12))}px`;
   }));
- 
+
   rightPaddle.addEventListener('click', ((e) => {
-    const cards = e.target.parentElement;
-    cards.scrollLeft += 600;
+    const cds = e.target.parentElement;
+    cds.scrollLeft += 600;
     leftPaddle.classList.remove('hidden');
-    leftPaddle.style.left = `${cards.scrollLeft+12}px`;
-    if(!((cards.scrollWidth-cards.clientWidth) > cards.scrollLeft)) e.target.classList.add('hidden');
-    e.target.style.right = `${((cards.scrollLeft-12) * -1)}px`;
+    leftPaddle.style.left = `${cards.scrollLeft + 12}px`;
+    if (!((cds.scrollWidth - cds.clientWidth) > cds.scrollLeft)) e.target.classList.add('hidden');
+    e.target.style.right = `${((cds.scrollLeft - 12) * -1)}px`;
   }));
-
   block.prepend(leftPaddle);
-  block.append(rightPaddle)
-
+  block.append(rightPaddle);
 }

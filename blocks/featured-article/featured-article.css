@@ -1,6 +1,5 @@
 .featured-article {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   width: 100%;
   margin-bottom: 1em;
@@ -46,9 +45,6 @@
   font-weight: 700;
   margin: 0;
   line-height: 1.75;
-}
-
-@media (min-width: 600px) {
 }
 
 @media (min-width: 900px) {
