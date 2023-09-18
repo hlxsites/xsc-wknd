@@ -1,7 +1,7 @@
 main .scroll-container {
   margin-top: -20px;
   position: relative;
-  /* z-index:-99; */
+  min-height: 100vh;
 }
 main .scroll-container > div > .card {
   background-color: transparent;
@@ -21,16 +21,12 @@ main .scroll-container .card-content {
   max-width: 1200px;
   margin: auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   column-gap: 76px;
 }
 
 main .scroll-container .card-content a.button {
   z-index: 2;
-}
-
-main .scroll-container h3 {
-  color: var(--link-text-color);
 }
 
 main .scroll-container .card-content .detail-info-rail {
@@ -113,6 +109,20 @@ main .close:focus {
   cursor: pointer;
 }
 
+@media (min-width: 1000px) {
+  main .scroll-container .card-content {
+    flex-direction: row;
+    column-gap: 76px;
+    padding: 50px 100px;
+  }
+
+  main .scroll-container .card-content > div:nth-child(2) {
+    text-align: center;
+    padding: unset;
+    width: 20%;
+  }
+}
+
 @media (min-width: 900px) {
   main .scroll-container .card-container {
     max-width: unset;
@@ -122,15 +132,14 @@ main .close:focus {
   }
 
   main .scroll-container .card-content {
-    display: flex;
-    flex-direction: row;
     column-gap: 76px;
     padding: 50px 100px;
   }
 
   main .scroll-container .card-content > div:nth-child(2) {
     text-align: center;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
     width: 20%;
   }
 }
