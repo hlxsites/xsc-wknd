@@ -161,19 +161,19 @@ function calculateTabSectionCoordinates(main) {
   let foldedTabsCounter = 0;
   const mainSections = [...main.childNodes];
   main
-      .querySelectorAll('div.section[data-tab-title]')
-      .forEach((section) => {
-        const currentSectionIndex = mainSections.indexOf(section);
+    .querySelectorAll('div.section[data-tab-title]')
+    .forEach((section) => {
+      const currentSectionIndex = mainSections.indexOf(section);
 
-        if (lastTabIndex < 0 || (currentSectionIndex - foldedTabsCounter) !== lastTabIndex) {
-          // we construct a new tabs component, at the currentSectionIndex
-          lastTabIndex = currentSectionIndex;
-          foldedTabsCounter = 0;
-        }
+      if (lastTabIndex < 0 || (currentSectionIndex - foldedTabsCounter) !== lastTabIndex) {
+        // we construct a new tabs component, at the currentSectionIndex
+        lastTabIndex = currentSectionIndex;
+        foldedTabsCounter = 0;
+      }
 
-        foldedTabsCounter += 2;
-        calculateTabSectionCoordinate(main, lastTabIndex, section);
-      });
+      foldedTabsCounter += 2;
+      calculateTabSectionCoordinate(main, lastTabIndex, section);
+    });
 }
 
 async function autoBlockTabComponent(main, targetIndex, tabSections) {
@@ -202,7 +202,8 @@ async function autoBlockTabComponent(main, targetIndex, tabSections) {
   section.append(tabsBlock);
   decorateBlock(tabsBlock);
   await loadBlock(tabsBlock);
-  // unset display none manually. somehow in some race conditions it won't be picked up by lib-franklin.
+  // unset display none manually.
+  // somehow in some race conditions it won't be picked up by lib-franklin.
   // CLS is not affected
   section.style.display = null;
 }

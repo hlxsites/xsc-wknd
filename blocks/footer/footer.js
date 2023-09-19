@@ -1,4 +1,4 @@
-import { buildBlock, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
+import { decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 
 /**
  * loads and decorates the footer
@@ -9,7 +9,6 @@ export default async function decorate(block) {
 
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta).pathname : '/footer';
-  //buildBlock('hero', { elems: [picture, content] })
   const resp = await fetch(`${footerPath}.plain.html`);
   if (resp.ok) {
     const html = await resp.text();
