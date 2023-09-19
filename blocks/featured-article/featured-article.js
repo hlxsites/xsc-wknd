@@ -1,6 +1,6 @@
 import {
   getMetadata,
-  createOptimizedPicture
+  createOptimizedPicture,
 } from '../../scripts/lib-franklin.js';
 
 /**
