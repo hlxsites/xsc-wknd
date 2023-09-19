@@ -11,9 +11,10 @@ function createSelect(fd) {
     select.append(ph);
   }
   fd.Options.split(',').forEach((o) => {
+    const [key, value] = o.includes(':') ? o.split(':') : [o, o];
     const option = document.createElement('option');
-    option.textContent = o.trim();
-    option.value = o.trim();
+    option.textContent = value.trim();
+    option.value = key.trim();
     select.append(option);
   });
   if (fd.Mandatory === 'x') {

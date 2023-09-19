@@ -122,9 +122,8 @@ export default async function decorate(block) {
         });
         if (navSection.querySelector('ul')) {
           navSection.querySelectorAll('li').forEach((li) => {
-            const path = li.querySelector('a').getAttribute('href').replace('/', '');
-            const { pathname } = window.location;
-            li.querySelector('a').setAttribute('href', `${pathname}${path}`);
+            const path = li.querySelector('a').getAttribute('href');
+            li.querySelector('a').setAttribute('href', `${path}`);
           });
         }
       });

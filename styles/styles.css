@@ -54,6 +54,7 @@
   /* nav height */
   --nav-height: 89px;
   --hero-height: 60vh;
+  --article-hero-height:30vh;
   --h3-padding: 0 10px;
 
 }
@@ -67,6 +68,7 @@
     --heading-font-size-s: 18px;
     --heading-font-size-xs: 16px;
     --hero-height:70vh;
+    --article-hero-height:40vh;
   }
 }
 
@@ -79,6 +81,7 @@
     --heading-font-size-s: 24px;
     --heading-font-size-xs: 22px;
     --hero-height:90vh;
+    --article-hero-height:40vh;
   }
 }
 

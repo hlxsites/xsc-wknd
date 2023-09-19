@@ -16,6 +16,10 @@ main .hero {
   height: var(--hero-height);
 }
 
+.article .hero {
+  height: var(--article-hero-height);
+}
+
 main .hero .hero-content {
   text-align: center;
   color: white;
