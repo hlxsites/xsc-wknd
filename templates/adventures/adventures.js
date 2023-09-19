@@ -13,7 +13,10 @@ const ADVENTUREDETAILS = {
 
 async function fetchAdventure(href) {
   const aem = getMetadata('urn:adobe:aem:editor:aemconnection');
-  const url = new URL(`${aem}${ENDPOINT}${QUERY}${href}`);
+  const { origin } = window.location;
+  const pq = (origin.includes('.live') || origin.includes('.page')) ? aem.replace('author', 'publish') : aem;
+
+  const url = new URL(`${pq}${ENDPOINT}${QUERY}${href}`);
   const resp = await fetch(
     url,
     {
