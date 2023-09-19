@@ -1,5 +1,5 @@
-main .form.modal {
-  visibility: hidden;
+main .form {
+  /* visibility: hidden; */
   position: fixed;
   top: 0;
   left: 0;
@@ -11,11 +11,11 @@ main .form.modal {
   display: grid;
 }
 
-main .form.modal.visible {
+main .form.visible {
   visibility: visible;
 }
 
-main .form.modal > div {
+main .form > div {
   display: flex;
   position: relative;
   flex-direction: row;
@@ -27,23 +27,23 @@ main .form.modal > div {
   box-shadow: 2px 2px rgb(255 255 255 / 30%);
 }
 
-main .form.modal form {
+main .form form {
   width: 60%;
   margin: 10px 5px 10px 10px;
 }
 
-main .form.modal > div > div {
+main .form > div > div {
   width: 40%;
 }
 
-main .form.modal img {
+main .form img {
   object-fit: cover;
   height: 100%;
   position: relative;
   border-radius: 0 10px 10px 0;
 }
 
-main .form.modal .close {
+main .form .close {
   width: 40px;
   height: 40px;
   border: 1px solid var(--border-color);
@@ -60,13 +60,13 @@ main .form.modal .close {
   transition: .2s;
 }
 
-main .form.modal .close::before {
+main .form .close::before {
   content: '×';
   transform: translateY(-.1rem);
 }
 
-main .form.modal .close:hover,
-main .form.modal .close:focus {
+main .form .close:hover,
+main .form .close:focus {
   background: var(--focus);
   border-color: var(--focus);
   color: white;

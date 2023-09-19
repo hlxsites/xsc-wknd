@@ -15,7 +15,6 @@ async function fetchAdventure(href) {
   const aem = getMetadata('urn:adobe:aem:editor:aemconnection');
   const { origin } = window.location;
   const pq = (origin.includes('.live') || origin.includes('.page')) ? aem.replace('author', 'publish') : aem;
-
   const url = new URL(`${pq}${ENDPOINT}${QUERY}${href}`);
   const resp = await fetch(
     url,

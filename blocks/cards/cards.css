@@ -8,12 +8,21 @@
 }
 
 .cards > ul > li {
-  border: 1px solid var(--highlight-background-color);
-  background-color: var(--background-color)
+  /* border: 1px solid var(--highlight-background-color); */
+  background-color: transparent
 }
 
 .cards .cards-card-body {
   margin: 16px;
+  text-align: left;
+}
+
+.cards .cards-card-body h3 {
+  font-size: var(--body-font-size-xs);
+}
+
+.cards .cards-card-body h5 {
+  font-size: var(--body-font-size-xxs);
 }
 
 .cards .cards-card-image {
@@ -28,4 +37,5 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  border-radius: 9px;
 }
