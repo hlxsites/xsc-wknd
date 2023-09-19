@@ -278,6 +278,23 @@ async function loadPage() {
   loadDelayed();
 }
 
+export function addAnchorLink(elem) {
+  const link = document.createElement('a');
+  link.setAttribute('href', `#${elem.id || ''}`);
+  link.setAttribute('title', `Copy link to "${elem.textContent}" to clipboard`);
+  link.classList.add('anchor-link');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(link.href);
+    window.location.href = link.href;
+    e.target.classList.add('anchor-link-copied');
+    setTimeout(() => e.target.classList.remove('anchor-link-copied'), 1000);
+  });
+  link.innerHTML = elem.innerHTML;
+  elem.innerHTML = '';
+  elem.append(link);
+}
+
 export async function fetchJson(href) {
   const url = new URL(href);
   try {
