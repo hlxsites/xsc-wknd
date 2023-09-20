@@ -15,7 +15,7 @@ export default async function decorate(block) {
   const { search } = window.location;
   let params;
 
-  if(search) {
+  if (search) {
     const searchParams = new URLSearchParams(search);
     params = Object.fromEntries(searchParams.entries());
   }

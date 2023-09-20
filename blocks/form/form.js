@@ -81,8 +81,8 @@ function setPlaceholder(element, fd) {
 }
 
 function setName(element, fd) {
-  if(fd.Field) {
-    element.setAttribute('nname', fd.Field);
+  if (fd.Field) {
+    element.setAttribute('name', fd.Field);
   }
 }
 
@@ -379,7 +379,7 @@ export default async function decorate(block) {
   const { search } = window.location;
   let params;
 
-  if(search) {
+  if (search) {
     const searchParams = new URLSearchParams(search);
     params = Object.fromEntries(searchParams.entries());
   }
@@ -387,6 +387,5 @@ export default async function decorate(block) {
   if (formLink) {
     const form = await createForm(formLink.href);
     formLink.replaceWith(form);
-    console.log(form);
   }
 }
