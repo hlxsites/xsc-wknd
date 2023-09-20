@@ -181,15 +181,5 @@ export default async function decorate(block) {
   const form = block.querySelector('a[href$=".json"]');
   if (form) {
     form.parentElement.replaceWith(await createForm(form.href));
-    [...block.classList].forEach((cls) => {
-      if (cls === 'modal') {
-        const close = addElement('a', { class: 'close', href: '#' });
-        close.addEventListener('click', ((e) => {
-          e.preventDefault();
-          block.classList.remove('visible');
-        }));
-        block.querySelector('div').append(close);
-      }
-    });
   }
 }

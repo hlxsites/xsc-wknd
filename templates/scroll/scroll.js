@@ -101,7 +101,10 @@ export default async function decorate(block) {
           const button = addElement('a', { class: 'button primary', href: '#' }, { innerText: 'Book Now' });
           button.addEventListener('click', ((e) => {
             e.preventDefault();
-            document.querySelector('.form.modal').classList.add('visible');
+            const modal = document.querySelector('.modal.fragment-container');
+            modal.querySelector('form #interest').value = adventure.node.title;
+            modal.querySelector('.products').classList.add(adventure.node.activity.toLowerCase());
+            modal.classList.add('visible');
           }));
 
           cardElem.querySelector('.card-image').append(pic);
