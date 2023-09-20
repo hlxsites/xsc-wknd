@@ -39,11 +39,10 @@ export function addVideo(element, href) {
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
-  if(getMetadata('template') === 'fragment') return;
   const h1 = main.querySelector('h1');
   const content = document.createElement('div');
   content.classList.add('hero-content');
-  content.append(h1);
+  if (h1) content.append(h1);
 
   const h2 = main.querySelector('h2');
   if (h2) {
@@ -253,10 +252,8 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  if(getMetadata('template') !== 'fragment') {
-    loadHeader(doc.querySelector('header'));
-    loadFooter(doc.querySelector('footer'));
-  }
+  loadHeader(doc.querySelector('header'));
+  loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/icons/favicon-32.png`);

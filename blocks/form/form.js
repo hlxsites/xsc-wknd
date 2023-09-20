@@ -80,6 +80,12 @@ function setPlaceholder(element, fd) {
   }
 }
 
+function setName(element, fd) {
+  if(fd.Field) {
+    element.setAttribute('nname', fd.Field);
+  }
+}
+
 const constraintsDef = Object.entries({
   'email|text': [['Max', 'maxlength'], ['Min', 'minlength']],
   'number|range|date': ['Max', 'Min', 'Step'],
@@ -160,6 +166,8 @@ function createSubmit(fd) {
 function createInput(fd) {
   const input = document.createElement('input');
   input.type = fd.Type;
+  input.setAttribute('name', fd.Field);
+  setName(input, fd);
   setPlaceholder(input, fd);
   setConstraints(input, fd);
   return input;
@@ -368,9 +376,17 @@ async function createForm(formURL) {
 }
 
 export default async function decorate(block) {
+  const { search } = window.location;
+  let params;
+
+  if(search) {
+    const searchParams = new URLSearchParams(search);
+    params = Object.fromEntries(searchParams.entries());
+  }
   const formLink = block.querySelector('a[href$=".json"]');
   if (formLink) {
     const form = await createForm(formLink.href);
     formLink.replaceWith(form);
+    console.log(form);
   }
 }

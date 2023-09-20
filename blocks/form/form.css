@@ -58,14 +58,22 @@ form [data-hidden="true"] {
 }
 
 main .form-container {
-    background-color: var(--mt-background-color-primary);
-    padding: var(--form-padding);
-    width: var(--form-width);
-    margin: var(--nav-height) auto;
+    /* background-color: var(--mt-background-color-primary); */
+    background-color: var(--background-color-primary);
+    /* padding: var(--form-padding); */
+    /* width: var(--form-width); */
+    margin: auto;
+    /* margin: var(--nav-height) auto; */
 }
 
 main .form {
     background-color: var(--form-background-color);
+}
+
+main .form > div {
+  display: flex;
+  flex-direction: row;
+  gap: var(--form-field-vert-gap);
 }
 
 main .form form {
