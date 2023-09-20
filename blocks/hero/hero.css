@@ -64,7 +64,12 @@ main .hero img {
   height: 100%;
 }
 
+.adventures main .hero picture,
+.article main .hero picture {
+  bottom: 300px;
+}
+
 .adventures main .hero img,
 .article main .hero img {
-  height: unset;
+  height: 600px;
 }
