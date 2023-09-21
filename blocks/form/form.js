@@ -1,3 +1,5 @@
+import { readBlockConfig } from '../../scripts/lib-franklin.js';
+
 function generateUnique() {
   return new Date().valueOf() + Math.random();
 }
@@ -30,7 +32,7 @@ function constructPayload(form) {
 }
 
 async function submissionFailure(error, form) {
-  alert(error); // eslint-disable-line no-alert
+  alert(error); // TODO define error mechansim
   form.setAttribute('data-submitting', 'false');
   form.querySelector('button[type="submit"]').disabled = false;
 }
@@ -41,7 +43,8 @@ async function prepareRequest(form, transformer) {
     'Content-Type': 'application/json',
   };
   const body = JSON.stringify({ data: payload });
-  const url = form.dataset.action;
+  const url = form.dataset.submit || form.dataset.action;
+
   if (typeof transformer === 'function') {
     return transformer({ headers, body, url }, form);
   }
@@ -80,12 +83,6 @@ function setPlaceholder(element, fd) {
   }
 }
 
-function setName(element, fd) {
-  if (fd.Field) {
-    element.setAttribute('name', fd.Field);
-  }
-}
-
 const constraintsDef = Object.entries({
   'email|text': [['Max', 'maxlength'], ['Min', 'minlength']],
   'number|range|date': ['Max', 'Min', 'Step'],
@@ -112,6 +109,8 @@ function createLabel(fd, tagName = 'label') {
   label.setAttribute('for', fd.Id);
   label.className = 'field-label';
   label.textContent = fd.Label || '';
+  label.setAttribute('itemprop', 'Label');
+  label.setAttribute('itemtype', 'text');
   if (fd.Tooltip) {
     label.title = fd.Tooltip;
   }
@@ -122,13 +121,27 @@ function createHelpText(fd) {
   const div = document.createElement('div');
   div.className = 'field-description';
   div.setAttribute('aria-live', 'polite');
+  div.setAttribute('itemtype', 'text');
+  div.setAttribute('itemprop', 'Description');
   div.innerText = fd.Description;
   div.id = `${fd.Id}-description`;
   return div;
 }
 
+function generateItemId(id) {
+  if (id) {
+    return `urn:fnkconnection:${window.formPath}:default:Id:${id}`;
+  }
+  return `urn:fnkconnection:${window.formPath}:default`;
+}
+
 function createFieldWrapper(fd, tagName = 'div') {
   const fieldWrapper = document.createElement(tagName);
+  fieldWrapper.setAttribute('itemtype', 'component');
+  fieldWrapper.setAttribute('itemid', generateItemId(fd.Id));
+  fieldWrapper.setAttribute('itemscope', '');
+  fieldWrapper.setAttribute('data-editor-itemlabel', fd.Label || fd.Name);
+  fieldWrapper.setAttribute('data-editor-itemmodel', fd.Type);
   const nameStyle = fd.Name ? ` form-${fd.Name}` : '';
   const fieldId = `form-${fd.Type}-wrapper${nameStyle}`;
   fieldWrapper.className = fieldId;
@@ -166,8 +179,6 @@ function createSubmit(fd) {
 function createInput(fd) {
   const input = document.createElement('input');
   input.type = fd.Type;
-  input.setAttribute('name', fd.Field);
-  setName(input, fd);
   setPlaceholder(input, fd);
   setConstraints(input, fd);
   return input;
@@ -239,6 +250,7 @@ function createFieldSet(fd) {
   const wrapper = createFieldWrapper(fd, 'fieldset');
   wrapper.id = fd.Id;
   wrapper.name = fd.Name;
+  wrapper.setAttribute('itemtype', 'container');
   wrapper.replaceChildren(createLegend(fd));
   if (fd.Repeatable && fd.Repeatable.toLowerCase() === 'true') {
     setConstraints(wrapper, fd);
@@ -306,14 +318,17 @@ function renderField(fd) {
 
 async function applyTransformation(formDef, form) {
   try {
-    const mod = await import('./transformer.js');
-    const {
-      default: {
-        transformDOM = () => {},
-        transformRequest,
-      },
-    } = mod;
-    transformDOM(formDef, form);
+    const { requestTransformers, transformers } = await import('./decorators/index.js');
+    if (transformers) {
+      transformers.forEach(
+        (fn) => fn.call(this, formDef, form),
+      );
+    }
+
+    const transformRequest = async (request, fd) => requestTransformers?.reduce(
+      (promise, transformer) => promise.then((modifiedRequest) => transformer(modifiedRequest, fd)),
+      Promise.resolve(request),
+    );
     return transformRequest;
   } catch (e) {
     // eslint-disable-next-line no-console
@@ -340,6 +355,7 @@ async function fetchForm(pathname) {
 
 async function createForm(formURL) {
   const { pathname } = new URL(formURL);
+  window.formPath = pathname;
   const data = await fetchForm(pathname);
   const form = document.createElement('form');
   data.forEach((fd) => {
@@ -375,17 +391,37 @@ async function createForm(formURL) {
   return form;
 }
 
-export default async function decorate(block) {
-  const { search } = window.location;
-  let params;
+function loadUEScripts() {
+  const head = document.getElementsByTagName('head')[0];
+  const meta = document.createElement('meta');
+  meta.name = 'urn:auecon:fnkconnection';
+  meta.content = `fnk:${window.origin}`;
+  head.appendChild(meta);
+  const ueEmbedded = document.createElement('script');
+  ueEmbedded.src = 'https://cdn.jsdelivr.net/gh/adobe/universal-editor-cors/dist/universal-editor-embedded.js';
+  ueEmbedded.async = true;
+  head.appendChild(ueEmbedded);
+  const componentDefinition = document.createElement('script');
+  componentDefinition.type = 'application/vnd.adobe.aem.editor.component-definition+json';
+  componentDefinition.src = '/blocks/form/component-definition.json';
+  head.appendChild(componentDefinition);
+}
 
-  if (search) {
-    const searchParams = new URLSearchParams(search);
-    params = Object.fromEntries(searchParams.entries()); // eslint-disable-line no-unused-vars
-  }
+export default async function decorate(block) {
   const formLink = block.querySelector('a[href$=".json"]');
   if (formLink) {
+    loadUEScripts();
     const form = await createForm(formLink.href);
+    form.setAttribute('itemid', generateItemId());
+    form.setAttribute('itemtype', 'container');
+    form.setAttribute('itemscope', '');
+    form.setAttribute('data-editor-itemlabel', 'Form Container');
     formLink.replaceWith(form);
+    const config = readBlockConfig(block);
+    Object.entries(config).forEach(([key, value]) => {
+      if (value) {
+        form.dataset[key] = value;
+      }
+    });
   }
 }
