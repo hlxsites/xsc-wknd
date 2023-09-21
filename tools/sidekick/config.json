@@ -5,7 +5,7 @@
       "id": "library",
       "title": "Library",
       "environments": [ "dev", "edit" ],
-      "url": "https://main--xsc-franklin-demo--lamontacrook.hlx.page/tools/sidekick/library.html",
+      "url": "https://main--xsc-wknd--hlxsites.hlx.page/tools/sidekick/library.html",
       "includePaths": [ "**.docx**" ]
     },
     {
