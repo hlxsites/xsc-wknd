@@ -1,7 +1,7 @@
 import { getMetadata } from '../../scripts/lib-franklin.js';
+import { useGraphQL } from '../../scripts/scripts.js';
 
-const ENDPOINT = '/graphql/execute.json/aem-demo-assets/';
-const QUERY = 'adventure-by-slug;slug=';
+const QUERY = '/graphql/execute.json/aem-demo-assets/adventure-by-slug-v2;slug=';
 const ADVENTUREDETAILS = {
   activity: 'Activity',
   adventureType: 'Adventure Type',
@@ -10,24 +10,6 @@ const ADVENTUREDETAILS = {
   difficulty: 'Difficulty',
   price: 'Price',
 };
-
-async function fetchAdventure(href) {
-  const aem = getMetadata('urn:adobe:aem:editor:aemconnection');
-  const { origin } = window.location;
-  const pq = (origin.includes('.live') || origin.includes('.page')) ? aem.replace('author', 'publish') : aem;
-  const url = new URL(`${pq}${ENDPOINT}${QUERY}${href}`);
-  const resp = await fetch(
-    url,
-    {
-      headers: {
-        'Content-Type': 'text/html',
-      },
-      method: 'get',
-      credentials: 'include',
-    },
-  );
-  return resp.json();
-}
 
 export default async function decorate(block) {
   const categories = {
@@ -39,7 +21,11 @@ export default async function decorate(block) {
   const slug = block.querySelector('div[data-slug]').getAttribute('data-slug');
   if (!slug) return;
 
-  const gql = await fetchAdventure(slug);
+  const aem = getMetadata('urn:adobe:aem:editor:aemconnection').startsWith('aem:')
+    ? getMetadata('urn:adobe:aem:editor:aemconnection').replace('aem:', '')
+    : getMetadata('urn:adobe:aem:editor:aemconnection');
+
+  const gql = await useGraphQL(`${aem}${QUERY}`, slug);
   const adventure = gql.data.adventureList.items[0];
 
   Object.keys(categories).forEach((category) => {

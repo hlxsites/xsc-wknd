@@ -320,6 +320,45 @@ export async function fetchJson(href) {
   }
 }
 
+export async function useGraphQL(query, param) {
+  const configPath = `${window.location.origin}/demo-config.json`;
+  let { data } = await fetchJson(configPath);
+  data = data && data[0];
+  if (!data) {
+    console.log('config not present'); // eslint-disable-line no-console
+    return;
+  }
+  const { origin } = window.location;
+
+  if (origin.includes('.live')) data['aem-author'] = data['aem-author'].replace('author', data['hlx.live']);
+  else if (origin.includes('.page')) data['aem-author'] = data['aem-author'].replace('author', data['hlx.page']);
+  data['aem-author'] = data['aem-author'].replace(/\/+$/, '');
+  const qry = query.replace(/^https?:\/\/[^#?]+/, data['aem-author']);
+  const url = param ? new URL(`${qry}${param}`) : new URL(`${qry}`);
+  try {
+    const resp = await fetch(
+      url,
+      {
+        headers: {
+          'Content-Type': 'text/html',
+        },
+        method: 'get',
+        credentials: 'include',
+      },
+    );
+
+    const error = new Error({
+      code: 500,
+      message: 'login error',
+    });
+
+    if (resp.redirected) throw (error);
+    return await resp.json(); // eslint-disable-line consistent-return
+  } catch (error) {
+    console.log(error); // eslint-disable-line no-console
+  }
+}
+
 export function addElement(type, attributes, values = {}) {
   const element = document.createElement(type);
 
@@ -336,9 +375,9 @@ export function addElement(type, attributes, values = {}) {
 
 loadPage();
 
-// document.querySelectorAll('meta').forEach((m) => {
-//   const prop = m.getAttribute('property');
-//   if(prop && prop.startsWith('urn:adobe')) {
-//     m.setAttribute('content', `aem:${m.getAttribute('content')}`);
-//   }
-// })
+document.querySelectorAll('meta').forEach((m) => {
+  const prop = m.getAttribute('property');
+  if (prop && prop.startsWith('urn:adobe')) {
+    m.setAttribute('content', `aem:${m.getAttribute('content')}`);
+  }
+});

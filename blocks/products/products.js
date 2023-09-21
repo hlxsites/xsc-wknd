@@ -32,7 +32,7 @@ export default async function decorate(block) {
     span.innerHTML += `<strong class='price'>${product.product_price}</strong>`;
     span.innerHTML += '<p style=\'text-align:center\'><a href=\'#\' class=\'button add2Cart\'>Add to Cart</a></p>';
     span.querySelector('.add2Cart').addEventListener('click', ((e) => {
-      alert('You didn\'t actually think I was going to add "Add to Cart" functionality');
+      alert('You didn\'t actually think I was going to add "Add to Cart" functionality'); // eslint-disable-line no-alert
       e.preventDefault();
     }));
     div.append(picture);
