@@ -98,12 +98,7 @@ export default async function decorate(block) {
           };
 
           const cardElem = addElement('div', editorProps, { innerHTML: pattern });
-          const button = addElement('a', { class: 'button primary', href: '#' }, { innerText: 'Book Now' });
-          button.addEventListener('click', ((e) => {
-            e.preventDefault();
-            document.querySelector('.form.modal').classList.add('visible');
-          }));
-
+          const button = addElement('a', { class: 'button primary', href: `fragments/book?adventure=${adventure.node.slug}&activity=${adventure.node.activity.toLowercase()}` }, { innerText: 'Book Now' });
           cardElem.querySelector('.card-image').append(pic);
           cardElem.querySelector('.card-content > div:last-child').append(button);
           cardContainer.append(cardElem);
