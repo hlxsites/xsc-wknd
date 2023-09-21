@@ -14,9 +14,24 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
+
+// Define the custom audiences mapping for experimentation
+const EXPERIMENTATION_CONFIG = {
+  audiences: {
+    device: {
+      mobile: () => window.innerWidth < 600,
+      desktop: () => window.innerWidth >= 600,
+    },
+    visitor: {
+      new: () => !localStorage.getItem('franklin-visitor-returning'),
+      returning: () => !!localStorage.getItem('franklin-visitor-returning'),
+    },
+  },
+};
 
 export function addVideo(element, href) {
   element.innerHTML = `<video loop muted playsInline>
@@ -230,6 +245,15 @@ function aggregateTabSectionsIntoComponents(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
+  // load experiments
+  const experiment = toClassName(getMetadata('experiment'));
+  const instantExperiment = getMetadata('instant-experiment');
+  if (instantExperiment || experiment) {
+    const { runExperiment } = await import('./experimentation/index.js');
+    await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
+  }
+
   const main = doc.querySelector('main');
   if (main) {
     decorateTemplates(main);
@@ -260,6 +284,27 @@ async function loadLazy(doc) {
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
+
+  // Load experimentation preview overlay
+  if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
+    const preview = await import(`${window.hlx.codeBasePath}/tools/preview/preview.js`);
+    await preview.default();
+    if (window.hlx.experiment) {
+      const experimentation = await import(`${window.hlx.codeBasePath}/tools/preview/experimentation.js`);
+      experimentation.default();
+    }
+  }
+
+  // Mark customer as having viewed the page once
+  localStorage.setItem('franklin-visitor-returning', true);
+
+  // const context = {
+  //   getMetadata,
+  //   toClassName,
+  // };
+  // eslint-disable-next-line import/no-relative-packages
+  // const { initConversionTracking } = await import('../plugins/rum-conversion/src/index.js');
+  // await initConversionTracking.call(context, document);
 }
 
 /**
