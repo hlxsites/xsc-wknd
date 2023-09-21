@@ -58,12 +58,17 @@ form [data-hidden="true"] {
 }
 
 main .form-container {
-    /* background-color: var(--mt-background-color-primary); */
+    /* background-color: var(--mt-background-color-primary);  eslint-disable-line comment-empty-line-before */
+    
     background-color: var(--background-color-primary);
-    /* padding: var(--form-padding); */
-    /* width: var(--form-width); */
+
+    /* padding: var(--form-padding); eslint-disable-line comment-empty-line-before */
+    
+    /* width: var(--form-width); eslint-disable-line comment-empty-line-before */
+    
     margin: auto;
-    /* margin: var(--nav-height) auto; */
+
+    /* margin: var(--nav-height) auto; eslint-disable-line comment-empty-line-before */
 }
 
 main .form {

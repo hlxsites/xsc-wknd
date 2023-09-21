@@ -42,7 +42,6 @@ main .products .product-list .product-item>div {
 
 main .products .product-list img {
   object-fit: scale-down;
-  height: auto;
   width: 100%;
   height: 200px;
 }
