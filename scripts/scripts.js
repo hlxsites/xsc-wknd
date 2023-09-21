@@ -54,7 +54,7 @@ export function addVideo(element, href) {
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
-  if(getMetadata('autoblock') === 'false') return;
+  if (getMetadata('autoblock') === 'false') return;
   const h1 = main.querySelector('h1');
   const content = document.createElement('div');
   content.classList.add('hero-content');
