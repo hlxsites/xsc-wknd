@@ -1,4 +1,4 @@
-const SITE_KEY = '6LcB318mAAAAAO6smzDd-TtD1-AWlidsHsCXcJHy';
+let SITE_KEY = '6LcB318mAAAAAO6smzDd-TtD1-AWlidsHsCXcJHy';
 
 function loadScript(url) {
   const head = document.querySelector('head');
@@ -14,7 +14,7 @@ function loadScript(url) {
 }
 
 export async function transformCaptchaDOM(formDef, form) {
-  // SITE_KEY = formDef.find(field => field.Name === 'googleRecaptcha')?.Value;
+  SITE_KEY = formDef.find((field) => field.Name === 'googleRecaptcha')?.Value;
   const button = form.querySelector('button[type="submit"]');
   if (SITE_KEY && button) {
     const obs = new IntersectionObserver((entries) => {
