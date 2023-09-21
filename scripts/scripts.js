@@ -21,6 +21,39 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
+/**
+ * Gets all the metadata elements that are in the given scope.
+ * @param {String} scope The scope/prefix for the metadata
+ * @returns an array of HTMLElement nodes that match the given scope
+ */
+export function getAllMetadata(scope) {
+  return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]
+    .reduce((res, meta) => {
+      const id = toClassName(meta.name
+        ? meta.name.substring(scope.length + 1)
+        : meta.getAttribute('property').split(':')[1]);
+      res[id] = meta.getAttribute('content');
+      return res;
+    }, {});
+}
+
+// Define an execution context
+const pluginContext = {
+  getAllMetadata,
+  getMetadata,
+  loadCSS,
+  loadScript,
+  sampleRUM,
+  toCamelCase,
+  toClassName,
+};
+
+const AUDIENCES = {
+  mobile: () => window.innerWidth < 600,
+  desktop: () => window.innerWidth >= 600,
+  // define your custom audiences here as needed
+};
+
 export function addVideo(element, href) {
   element.innerHTML = `<video loop muted playsInline>
     <source data-src="${href}" type="video/mp4" />
@@ -351,8 +384,7 @@ export async function useGraphQL(query, param) {
 
   if (origin.includes('.live')) {
     data['aem-author'] = data['aem-author'].replace('author', data['hlx.live']);
-  }
-  else if (origin.includes('.page')) {
+  } else if (origin.includes('.page')) {
     data['aem-author'] = data['aem-author'].replace('author', data['hlx.page']);
   }
   data['aem-author'] = data['aem-author'].replace(/\/+$/, '');
@@ -380,39 +412,6 @@ export async function useGraphQL(query, param) {
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
   }
-}
-
-// Define an execution context
-const pluginContext = {
-  getAllMetadata,
-  getMetadata,
-  loadCSS,
-  loadScript,
-  sampleRUM,
-  toCamelCase,
-  toClassName,
-};
-
-const AUDIENCES = {
-  mobile: () => window.innerWidth < 600,
-  desktop: () => window.innerWidth >= 600,
-  // define your custom audiences here as needed
-};
-
-/**
- * Gets all the metadata elements that are in the given scope.
- * @param {String} scope The scope/prefix for the metadata
- * @returns an array of HTMLElement nodes that match the given scope
- */
-export function getAllMetadata(scope) {
-  return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]
-    .reduce((res, meta) => {
-      const id = toClassName(meta.name
-        ? meta.name.substring(scope.length + 1)
-        : meta.getAttribute('property').split(':')[1]);
-      res[id] = meta.getAttribute('content');
-      return res;
-    }, {});
 }
 
 export function addElement(type, attributes, values = {}) {
