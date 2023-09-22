@@ -73,6 +73,7 @@ main .form-container {
 
 main .form {
     background-color: var(--form-background-color);
+    visibility: hidden;
 }
 
 main .form > div {

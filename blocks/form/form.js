@@ -417,6 +417,7 @@ export default async function decorate(block) {
     form.setAttribute('itemscope', '');
     form.setAttribute('data-editor-itemlabel', 'Form Container');
     formLink.replaceWith(form);
+    block.style.setProperty('visibility', 'visible');
     let config;
     if (block.querySelector('picture')) {
       const subBlock = block.querySelector('.form > div > div');
