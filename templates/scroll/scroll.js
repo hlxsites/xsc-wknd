@@ -65,8 +65,10 @@ export default async function decorate(block) {
             id: adventure.node.slug,
           };
 
+          const { pathname } = window.location;
+          const lang = pathname.split('/')[1];
           const cardElem = addElement('div', editorProps, { innerHTML: pattern });
-          const button = addElement('a', { class: 'button primary', href: `fragments/book?adventure=${adventure.node.slug}&activity=${adventure.node.activity.toLowerCase()}` }, { innerText: 'Book Now' });
+          const button = addElement('a', { class: 'button primary', href: `fragments/book?adventure=${adventure.node.slug}&activity=${adventure.node.activity.toLowerCase()}-${lang}` }, { innerText: 'Book Now' });
           cardElem.querySelector('.card-image').append(pic);
           cardElem.querySelector('.card-content > div:last-child').append(button);
           cardContainer.append(cardElem);
