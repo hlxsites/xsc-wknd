@@ -35,8 +35,6 @@ export default async function decorate($block) {
   const desc = getMetadata('og:description', doc);
   const picture = getMetadata('og:image', doc);
 
-  console.log(title);
-
   const $pre = document.createElement('p');
   $pre.classList.add('pretitle');
   $pre.textContent = 'Featured Article';

@@ -1,4 +1,4 @@
-import { getMetadata, decorateIcons } from '../../scripts/lib-franklin.js';
+import { getMetadata, decorateIcons, loadBlocks } from '../../scripts/lib-franklin.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -146,6 +146,10 @@ export default async function decorate(block) {
     const navWrapper = document.createElement('div');
     navWrapper.className = 'nav-wrapper';
     navWrapper.append(nav);
+    const form = nav.querySelector('.form');
+    form.classList.add('block');
+    form.setAttribute('data-block-name', 'form');
+    await loadBlocks(nav);
     block.append(navWrapper);
   }
 }

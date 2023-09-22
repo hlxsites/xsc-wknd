@@ -32,6 +32,7 @@
   --button-text-color: #fff;
   --button-border-radius: 5px;
   --button-padding: 5px 10px;
+  --icon-visibility: none;
 
   /* fonts */
   --body-font-family: adobe-clean-light, 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;

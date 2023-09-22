@@ -417,7 +417,11 @@ export default async function decorate(block) {
     form.setAttribute('itemscope', '');
     form.setAttribute('data-editor-itemlabel', 'Form Container');
     formLink.replaceWith(form);
-    const config = readBlockConfig(block);
+    let config;
+    if (block.querySelector('picture')) {
+      const subBlock = block.querySelector('.form > div > div');
+      config = readBlockConfig(subBlock);
+    } else config = readBlockConfig(block);
     Object.entries(config).forEach(([key, value]) => {
       if (value) {
         form.dataset[key] = value;
