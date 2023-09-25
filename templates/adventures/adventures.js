@@ -25,8 +25,8 @@ export default async function decorate(block) {
     ? getMetadata('urn:adobe:aem:editor:aemconnection').replace('aem:', '')
     : getMetadata('urn:adobe:aem:editor:aemconnection');
 
-  const gql = await useGraphQL(`${aem}${QUERY}`, slug);
-  const adventure = gql.data.adventureList.items[0];
+  const { adventures } = await useGraphQL(`${aem}${QUERY}`, slug);
+  const adventure = adventures.data.adventureList.items[0];
 
   Object.keys(categories).forEach((category) => {
     const body = document.createElement('div');

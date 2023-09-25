@@ -1,5 +1,5 @@
 import { addElement, useGraphQL } from '../../scripts/scripts.js';
-import { createOptimizedPicture, getMetadata } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 export default async function decorate(block) {
   const scrollContainer = block.querySelector('.scroll-container');
@@ -10,23 +10,19 @@ export default async function decorate(block) {
 
   let observer;
   let cursor;
-  let adventures = await useGraphQL(query, cursor);
+  let { adventures, environment } = await useGraphQL(query, cursor);// eslint-disable-line prefer-const, max-len
   let hasNext = true;
   let initial = true;
   const callback = async (array) => {
     array.forEach(async (card) => {
       if (card.isIntersecting && hasNext) {
         if (initial) initial = false;
-        else adventures = await useGraphQL(query, cursor);
+        else ({ adventures } = await useGraphQL(query, cursor));
         cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
         hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
 
-        const { origin } = window.location;
-        let aem = (origin.includes('.live') || origin.includes('.page')) ? getMetadata('urn:adobe:aem:editor:aemconnection').replace('author', 'publish') : getMetadata('urn:adobe:aem:editor:aemconnection');
-        aem = aem.startsWith('aem:') && aem.replace('aem:', '');
-
         adventures.data.adventurePaginated.edges.forEach((adventure) => {
-          const pic = createOptimizedPicture(`${aem}${adventure.node.primaryImage.dm}`, adventure.node.slug, true, [{ media: '(min-width: 600px)', width: '2000' }], true);
+          const pic = createOptimizedPicture(`${environment}${adventure.node.primaryImage.dm}`, adventure.node.slug, true, [{ media: '(min-width: 600px)', width: '2000' }], true);
           const pattern = `
           <div class='card-image'></div> 
           <div class='card-content'>
