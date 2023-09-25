@@ -54,8 +54,8 @@
   --heading-font-size-xs: 16px;
 
   /* Headings (Consonant) */
-  --type-heading-xxxl-lh: 1;
-  --type-heading-xxl-lh: 1;
+  --type-heading-xxxl-lh: 1px;
+  --type-heading-xxl-lh: 1px;
   --type-heading-xl-lh: 35px;
   --type-heading-l-lh: 30px;
   --type-heading-m-lh: 25px;
@@ -358,4 +358,8 @@ main .section {
 /* section metadata */
 main .section.highlight {
   background-color: var(--highlight-background-color);
+}
+
+body.noscroll {
+  overflow: hidden;
 }

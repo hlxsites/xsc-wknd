@@ -2,3 +2,6 @@ helix-importer-ui
 working/*
 plugins/*
 ued.js
+experimentation/*
+preview/*
+form/*

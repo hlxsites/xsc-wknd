@@ -417,32 +417,8 @@ export default async function decorate(block) {
     form.setAttribute('itemscope', '');
     form.setAttribute('data-editor-itemlabel', 'Form Container');
     formLink.replaceWith(form);
-
+    block.style.setProperty('visibility', 'visible');
     const config = readBlockConfig(block);
     Object.entries(config).forEach(([key, value]) => { if (value) form.dataset[key] = value; });
   }
 }
-/*
-export default async function decorate(block) {
-  const formLink = block.querySelector('a[href$=".json"]');
-  if (formLink) {
-    loadUEScripts();
-    const form = await createForm(formLink.href);
-    form.setAttribute('itemid', generateItemId());
-    form.setAttribute('itemtype', 'container');
-    form.setAttribute('itemscope', '');
-    form.setAttribute('data-editor-itemlabel', 'Form Container');
-    formLink.replaceWith(form);
-    let config;
-    if (block.querySelector('picture')) {
-      const subBlock = block.querySelector('.form > div > div');
-      config = readBlockConfig(subBlock);
-    } else config = readBlockConfig(block);
-    Object.entries(config).forEach(([key, value]) => {
-      if (value) {
-        form.dataset[key] = value;
-      }
-    });
-  }
-}
-*/

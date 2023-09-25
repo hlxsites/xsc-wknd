@@ -72,7 +72,7 @@ header nav p {
 }
 
 header p:has(.icon-cart) {
-  position: relative;;
+  position: relative;
 }
 
 header nav a:any-link {
@@ -302,14 +302,19 @@ header nav .nav-tools {
   gap: 20px;
 }
 
+header nav .nav-tools .form {
+  display: none;
+}
+
 header nav .nav-tools form select {
   cursor: pointer;
   display: inline-block;
   position: relative;
-  font-size: 16px;
+  font-size: var(--body-font-size-xxs);
   color: var(--highlight-background-color);
   background: var(--background-color-transparent);
   width: 100px;
   height: inherit;
+  padding: 3px 0;
   margin: 0 5px;
 }

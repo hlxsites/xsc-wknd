@@ -263,6 +263,13 @@ async function loadEager(doc) {
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
   }
+
+  doc.querySelectorAll('meta').forEach((m) => {
+    const prop = m.getAttribute('property');
+    if (prop && prop.startsWith('urn:adobe')) {
+      m.setAttribute('content', `aem:${m.getAttribute('content')}`);
+    }
+  });
 }
 
 /**
@@ -410,7 +417,10 @@ export async function useGraphQL(query, param) {
     });
 
     if (resp.redirected) throw (error);
-    return await resp.json(); // eslint-disable-line consistent-return
+
+    const adventures = await resp.json();
+    const environment = data['aem-author'];
+    return { adventures, environment }; // eslint-disable-line consistent-return
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
   }
@@ -431,10 +441,3 @@ export function addElement(type, attributes, values = {}) {
 }
 
 loadPage();
-
-document.querySelectorAll('meta').forEach((m) => {
-  const prop = m.getAttribute('property');
-  if (prop && prop.startsWith('urn:adobe')) {
-    m.setAttribute('content', `aem:${m.getAttribute('content')}`);
-  }
-});
