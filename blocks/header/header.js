@@ -149,7 +149,9 @@ export default async function decorate(block) {
     const form = nav.querySelector('.form');
     form.classList.add('block');
     form.setAttribute('data-block-name', 'form');
-    await loadBlocks(nav);
+    loadBlocks(nav).then(() => {
+      form.style.setProperty('display', 'block');
+    });
     block.append(navWrapper);
   }
 }

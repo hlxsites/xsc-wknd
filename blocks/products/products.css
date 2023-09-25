@@ -7,6 +7,7 @@ main .products .product-list {
   margin: 0;
   border-radius: 10px;
   overflow-x: scroll;
+  visibility: hidden;
 }
 
 main .products .product-list span {
