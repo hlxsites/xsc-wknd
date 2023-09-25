@@ -28,7 +28,7 @@ export default async function decorate(block) {
   products.data.forEach((product) => {
     const li = addElement('li', { class: 'product-item' });
     const div = document.createElement('div');
-    const picture = createOptimizedPicture(product.product_thumbnail_url, product.product_sku, true);
+    const picture = createOptimizedPicture(product.product_thumbnail_url, product.product_sku, true); // eslint-disable-line max-len
     const span = addElement('span', { id: product.product_name }, { innerHTML: `<strong>${product.product_name}</strong>` });
     span.innerHTML += `<p>${product.product_short_description}</p>`;
     span.innerHTML += `<strong class='price'>${product.product_price}</strong>`;
