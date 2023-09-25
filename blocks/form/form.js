@@ -417,6 +417,22 @@ export default async function decorate(block) {
     form.setAttribute('itemscope', '');
     form.setAttribute('data-editor-itemlabel', 'Form Container');
     formLink.replaceWith(form);
+
+    const config = readBlockConfig(block);
+    Object.entries(config).forEach(([key, value]) => { if (value) form.dataset[key] = value; });
+  }
+}
+/*
+export default async function decorate(block) {
+  const formLink = block.querySelector('a[href$=".json"]');
+  if (formLink) {
+    loadUEScripts();
+    const form = await createForm(formLink.href);
+    form.setAttribute('itemid', generateItemId());
+    form.setAttribute('itemtype', 'container');
+    form.setAttribute('itemscope', '');
+    form.setAttribute('data-editor-itemlabel', 'Form Container');
+    formLink.replaceWith(form);
     let config;
     if (block.querySelector('picture')) {
       const subBlock = block.querySelector('.form > div > div');
@@ -429,3 +445,4 @@ export default async function decorate(block) {
     });
   }
 }
+*/
