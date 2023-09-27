@@ -235,7 +235,7 @@ async function loadEager(doc) {
     decorateTemplates(main);
     decorateMain(main);
     aggregateTabSectionsIntoComponents(main);
-    // document.body.classList.add('appear');
+    document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
   }
 
