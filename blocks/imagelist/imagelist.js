@@ -21,13 +21,17 @@ async function loadFragment(path) {
  * @param {HTMLElement} block The header block element
  */
 export default async function decorate(block) {
+  const promises = [];
+
   const cards = addElement('div', { class: 'cards' });
-  [...block.children].forEach(async (div) => {
+  [...block.children].forEach((div) => {
     const link = div.querySelector('div>div>a');
     const path = link ? link.getAttribute('href') : block.textContent.trim();
-    const doc = await loadFragment(path);
+    promises.push(loadFragment(path));
     div.remove();
+  });
 
+  Promise.all(promises).then((doc) => {
     const heroPicture = doc.querySelector('picture');
     const title = getMetadata('og:title', doc);
 
@@ -46,6 +50,7 @@ export default async function decorate(block) {
 
     cards.appendChild(a);
   });
+  
   block.append(cards);
 
   const leftPaddle = addElement('button', { class: 'left-paddle paddle hidden' }, { innerText: '<' });
