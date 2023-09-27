@@ -16,7 +16,7 @@ import {
   loadBlock,
 } from './lib-franklin.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
 
 export function addVideo(element, href) {
   element.innerHTML = `<video loop muted playsInline>
@@ -235,7 +235,7 @@ async function loadEager(doc) {
     decorateTemplates(main);
     decorateMain(main);
     aggregateTabSectionsIntoComponents(main);
-    document.body.classList.add('appear');
+    // document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
   }
 
