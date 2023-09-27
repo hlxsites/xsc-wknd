@@ -14,6 +14,8 @@ main .hero {
   padding: 32px;
   min-height: var(--hero-height);
   height: var(--hero-height);
+  background-color: red;
+  z-index: -5;
 }
 
 .article .hero {
