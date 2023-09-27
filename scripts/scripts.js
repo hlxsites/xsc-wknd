@@ -232,8 +232,8 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
-    decorateMain(main);
     decorateTemplates(main);
+    decorateMain(main);
     aggregateTabSectionsIntoComponents(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
