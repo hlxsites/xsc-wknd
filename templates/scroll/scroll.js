@@ -1,38 +1,5 @@
-import { addElement } from '../../scripts/scripts.js';
-import { createOptimizedPicture, getMetadata } from '../../scripts/lib-franklin.js';
-
-async function fetchAdventures(query, cursor) {
-  const { origin } = window.location;
-  const pq = (origin.includes('.live') || origin.includes('.page')) ? query.replace('author', 'publish') : query;
-
-  const url = cursor ? new URL(`${pq}${cursor}`) : new URL(`${pq}`);
-
-  try {
-    const resp = await fetch(
-      url,
-      {
-        headers: {
-          'Content-Type': 'text/html',
-        },
-        method: 'get',
-        credentials: 'include',
-      },
-    );
-
-    const error = new Error({
-      code: 500,
-      message: 'login error',
-    });
-
-    if (resp.redirected) throw (error);
-    return resp.json();
-  } catch (error) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(await error.text(), 'text/html');
-    const payload = await JSON.parse(doc.querySelector('pre > code').textContent);
-    return payload;
-  }
-}
+import { addElement, useGraphQL } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 export default async function decorate(block) {
   const scrollContainer = block.querySelector('.scroll-container');
@@ -43,22 +10,19 @@ export default async function decorate(block) {
 
   let observer;
   let cursor;
-  let adventures = await fetchAdventures(query, cursor);
+  let { adventures, environment } = await useGraphQL(query, cursor);// eslint-disable-line prefer-const, max-len
   let hasNext = true;
   let initial = true;
   const callback = async (array) => {
     array.forEach(async (card) => {
       if (card.isIntersecting && hasNext) {
         if (initial) initial = false;
-        else adventures = await fetchAdventures(query, cursor);
+        else ({ adventures } = await useGraphQL(query, cursor));
         cursor = adventures.data.adventurePaginated.pageInfo.endCursor;
         hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
 
-        const { origin } = window.location;
-        const aem = (origin.includes('.live') || origin.includes('.page')) ? getMetadata('urn:adobe:aem:editor:aemconnection').replace('author', 'publish') : getMetadata('urn:adobe:aem:editor:aemconnection');
-
         adventures.data.adventurePaginated.edges.forEach((adventure) => {
-          const pic = createOptimizedPicture(`${aem}${adventure.node.primaryImage.dm}`, adventure.node.slug, true, [{ media: '(min-width: 600px)', width: '2000' }], true);
+          const pic = createOptimizedPicture(`${environment}${adventure.node.primaryImage.dm}`, adventure.node.slug, true, [{ media: '(min-width: 600px)', width: '2000' }], true);
           const pattern = `
           <div class='card-image'></div> 
           <div class='card-content'>
@@ -97,13 +61,10 @@ export default async function decorate(block) {
             id: adventure.node.slug,
           };
 
+          const { pathname } = window.location;
+          const lang = pathname.split('/')[1];
           const cardElem = addElement('div', editorProps, { innerHTML: pattern });
-          const button = addElement('a', { class: 'button primary', href: '#' }, { innerText: 'Book Now' });
-          button.addEventListener('click', ((e) => {
-            e.preventDefault();
-            document.querySelector('.form.modal').classList.add('visible');
-          }));
-
+          const button = addElement('a', { class: 'button primary', href: `fragments/book?adventure=${adventure.node.slug}&activity=${adventure.node.activity.toLowerCase()}-${lang}` }, { innerText: 'Book Now' });
           cardElem.querySelector('.card-image').append(pic);
           cardElem.querySelector('.card-content > div:last-child').append(button);
           cardContainer.append(cardElem);

@@ -7,6 +7,23 @@ header .nav-wrapper {
   position: fixed;
 }
 
+header .icon-cart::after {
+  display: var(--icon-visibility);
+  content:"";
+  position: absolute;
+  height: 7.5px;
+  width: 7.5px;
+  border-radius: 10px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-image: initial;
+  border-color: var(--highlight-background-color);
+  top: 0.4px;
+  right: 0;
+  background-color: var(--highlight-background-color);
+  animation: 4s ease 0s infinite normal none running animation-1gv119l;
+}
+
 header nav {
   box-sizing: border-box;
   display: grid;
@@ -52,6 +69,10 @@ header nav[aria-expanded="true"] {
 header nav p {
   margin: 0;
   line-height: 1;
+}
+
+header p:has(.icon-cart) {
+  position: relative;
 }
 
 header nav a:any-link {
@@ -276,4 +297,24 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+}
+
+header nav .nav-tools .form {
+  display: none;
+}
+
+header nav .nav-tools form select {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  font-size: var(--body-font-size-xxs);
+  color: var(--highlight-background-color);
+  background: var(--background-color-transparent);
+  width: 100px;
+  height: inherit;
+  padding: 3px 0;
+  margin: 0 5px;
 }

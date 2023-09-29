@@ -64,3 +64,13 @@ main .hero img {
   object-fit: cover;
   width: 100wh;
 }
+
+.adventures main .hero picture,
+.article main .hero picture {
+  bottom: 300px;
+}
+
+.adventures main .hero img,
+.article main .hero img {
+  height: 600px;
+}

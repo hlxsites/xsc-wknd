@@ -1,0 +1,55 @@
+main .products .product-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  background-color: rgb(255 255 255 / 90%);
+  margin: 0;
+  border-radius: 10px;
+  overflow-x: scroll;
+  visibility: hidden;
+}
+
+main .products .product-list span {
+  width: 100%;
+  display: block;
+  text-align: left;
+}
+
+main .products .product-item {
+  border-left: .8px solid var(--link-hover-color);
+  padding: 0 5px;
+}
+
+main .products .product-list .product-item span>p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  font-size: 11px;
+}
+
+main .products .product-list .product-item span > .price::before {
+  content:"$";
+}
+
+main .products .product-list .product-item>div {
+  position: relative;
+  display: block;
+  background: var(--chakra-colors-bg-primary);
+  width: 220px;
+  padding: 5px
+}
+
+main .products .product-list img {
+  object-fit: scale-down;
+  width: 100%;
+  height: 200px;
+}
+
+main .modal h4 {
+  font-size: var(--heading-font-size-xs);
+  background-color: rgb(255 255 255 / 90%);
+  margin: 0;
+  padding: 0 10px;
+}

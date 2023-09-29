@@ -14,9 +14,24 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
+
+// Define the custom audiences mapping for experimentation
+const EXPERIMENTATION_CONFIG = {
+  audiences: {
+    device: {
+      mobile: () => window.innerWidth < 600,
+      desktop: () => window.innerWidth >= 600,
+    },
+    visitor: {
+      new: () => !localStorage.getItem('franklin-visitor-returning'),
+      returning: () => !!localStorage.getItem('franklin-visitor-returning'),
+    },
+  },
+};
 
 export function addVideo(element, href) {
   element.innerHTML = `<video loop muted playsInline>
@@ -39,10 +54,11 @@ export function addVideo(element, href) {
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
+  if (getMetadata('autoblock') === 'false') return;
   const h1 = main.querySelector('h1');
   const content = document.createElement('div');
   content.classList.add('hero-content');
-  content.append(h1);
+  if (h1) content.append(h1);
 
   const h2 = main.querySelector('h2');
   if (h2) {
@@ -230,6 +246,15 @@ function aggregateTabSectionsIntoComponents(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
+  // load experiments
+  const experiment = toClassName(getMetadata('experiment'));
+  const instantExperiment = getMetadata('instant-experiment');
+  if (instantExperiment || experiment) {
+    const { runExperiment } = await import('./experimentation/index.js');
+    await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
+  }
+
   const main = doc.querySelector('main');
   if (main) {
     decorateTemplates(main);
@@ -267,6 +292,27 @@ async function loadLazy(doc) {
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
+
+  // Load experimentation preview overlay
+  if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
+    const preview = await import(`${window.hlx.codeBasePath}/tools/preview/preview.js`);
+    await preview.default();
+    if (window.hlx.experiment) {
+      const experimentation = await import(`${window.hlx.codeBasePath}/tools/preview/experimentation.js`);
+      experimentation.default();
+    }
+  }
+
+  // Mark customer as having viewed the page once
+  localStorage.setItem('franklin-visitor-returning', true);
+
+  // const context = {
+  //   getMetadata,
+  //   toClassName,
+  // };
+  // eslint-disable-next-line import/no-relative-packages
+  // const { initConversionTracking } = await import('../plugins/rum-conversion/src/index.js');
+  // await initConversionTracking.call(context, document);
 }
 
 /**
@@ -283,6 +329,23 @@ async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
+}
+
+export function addAnchorLink(elem) {
+  const link = document.createElement('a');
+  link.setAttribute('href', `#${elem.id || ''}`);
+  link.setAttribute('title', `Copy link to "${elem.textContent}" to clipboard`);
+  link.classList.add('anchor-link');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(link.href);
+    window.location.href = link.href;
+    e.target.classList.add('anchor-link-copied');
+    setTimeout(() => e.target.classList.remove('anchor-link-copied'), 1000);
+  });
+  link.innerHTML = elem.innerHTML;
+  elem.innerHTML = '';
+  elem.append(link);
 }
 
 export async function fetchJson(href) {
@@ -308,20 +371,6 @@ export async function fetchJson(href) {
   } catch (error) {
     return error;
   }
-}
-
-export function addElement(type, attributes, values = {}) {
-  const element = document.createElement(type);
-
-  Object.keys(attributes).forEach((attribute) => {
-    element.setAttribute(attribute, attributes[attribute]);
-  });
-
-  Object.keys(values).forEach((val) => {
-    element[val] = values[val];
-  });
-
-  return element;
 }
 
 export async function useGraphQL(query, param) {
@@ -375,6 +424,20 @@ export async function useGraphQL(query, param) {
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
   }
+}
+
+export function addElement(type, attributes, values = {}) {
+  const element = document.createElement(type);
+
+  Object.keys(attributes).forEach((attribute) => {
+    element.setAttribute(attribute, attributes[attribute]);
+  });
+
+  Object.keys(values).forEach((val) => {
+    element[val] = values[val];
+  });
+
+  return element;
 }
 
 loadPage();
