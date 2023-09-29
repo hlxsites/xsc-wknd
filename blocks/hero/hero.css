@@ -12,10 +12,8 @@ main .hero-container {
 main .hero {
   position: relative;
   padding: 32px;
-  min-height: var(--hero-height);
+  min-height: 300px;
   height: var(--hero-height);
-  background-color: red;
-  z-index: -5;
 }
 
 .article .hero {
@@ -62,5 +60,5 @@ main .hero picture {
 
 main .hero img {
   object-fit: cover;
-  width: 100wh;
+  width: 100vw;
 }
