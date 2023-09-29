@@ -17,7 +17,7 @@ import {
   toClassName,
 } from './lib-franklin.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['imagelist', 'featured-article']; // add your LCP blocks to the list
 
 // Define the custom audiences mapping for experimentation
 const EXPERIMENTATION_CONFIG = {
