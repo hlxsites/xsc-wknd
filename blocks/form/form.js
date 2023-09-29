@@ -32,7 +32,7 @@ function constructPayload(form) {
 }
 
 async function submissionFailure(error, form) {
-  alert(error); // TODO define error mechansim
+  alert(error); // eslint-disable-line no-alert
   form.setAttribute('data-submitting', 'false');
   form.querySelector('button[type="submit"]').disabled = false;
 }
