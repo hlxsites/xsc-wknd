@@ -1,5 +1,7 @@
 main .imagelist {
   min-height: 320px;
+  height: 320px;
+  width: 100%;
   white-space: nowrap;
   position: relative;
   overflow-x: scroll;
@@ -15,7 +17,7 @@ main .section.imagelist-container {
 }
 
 main .imagelist .cards::-webkit-scrollbar {
-  /* display: none; */
+  display: none;
 }
 
 main .imagelist .card {

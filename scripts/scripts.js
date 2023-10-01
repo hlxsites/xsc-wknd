@@ -15,7 +15,7 @@ import {
   decorateBlock,
   loadBlock,
   toClassName,
-} from './lib-franklin.js';
+} from './aem.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
@@ -33,6 +33,19 @@ const EXPERIMENTATION_CONFIG = {
   },
 };
 
+/**
+ * Determine if we are serving content for the block-library, if so don't load the header or footer
+ * @returns {boolean} True if we are loading block library content
+ */
+export function isBlockLibrary() {
+  return window.location.pathname.includes('block-library');
+}
+
+/**
+ * TODO: Update
+ * @param {*} element
+ * @param {*} href
+ */
 export function addVideo(element, href) {
   element.innerHTML = `<video loop muted playsInline>
     <source data-src="${href}" type="video/mp4" />
@@ -49,6 +62,38 @@ export function addVideo(element, href) {
   });
 }
 
+/**
+ * Convience method for creating tags in one line of code
+ * @param {string} tag Tag to create
+ * @param {object} attributes Key/value object of attributes
+ * @param {HTMLElement | HTMLElement[] | string} children Child element
+ * @returns {HTMLElement} The created tag
+ */
+export function createTag(tag, attributes, children) {
+  const element = document.createElement(tag);
+  if (children) {
+    if (children instanceof HTMLElement
+      || children instanceof SVGElement
+      || children instanceof DocumentFragment) {
+      element.append(children);
+    } else if (Array.isArray(children)) {
+      element.append(...children);
+    } else {
+      element.insertAdjacentHTML('beforeend', children);
+    }
+  }
+  if (attributes) {
+    Object.entries(attributes).forEach(([key, val]) => {
+      element.setAttribute(key, val);
+    });
+  }
+  return element;
+}
+
+/**
+ * Builds hero block and prepends to main in a new section.
+ * @param {Element} main The container element
+ */
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -87,6 +132,18 @@ function buildHeroBlock(main) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [main.querySelector('video'), content] }));
     main.prepend(section);
+  }
+}
+
+/**
+ * load fonts.css and set a session storage flag
+ */
+async function loadFonts() {
+  await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  try {
+    if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
+  } catch (e) {
+    // do nothing
   }
 }
 
@@ -264,12 +321,24 @@ async function loadEager(doc) {
     await waitForLCP(LCP_BLOCKS);
   }
 
+  /**
+   * fix UE meta tag
+   */
   doc.querySelectorAll('meta').forEach((m) => {
     const prop = m.getAttribute('property');
     if (prop && prop.startsWith('urn:adobe')) {
       m.setAttribute('content', `aem:${m.getAttribute('content')}`);
     }
   });
+
+  try {
+    /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
+    if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
+      loadFonts();
+    }
+  } catch (e) {
+    // do nothing
+  }
 }
 
 /**
@@ -288,7 +357,8 @@ async function loadLazy(doc) {
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  addFavIcon(`${window.hlx.codeBasePath}/icons/favicon-32.png`);
+  loadFonts();
+
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
@@ -306,13 +376,13 @@ async function loadLazy(doc) {
   // Mark customer as having viewed the page once
   localStorage.setItem('franklin-visitor-returning', true);
 
-  // const context = {
-  //   getMetadata,
-  //   toClassName,
-  // };
+  const context = {
+    getMetadata,
+    toClassName,
+  };
   // eslint-disable-next-line import/no-relative-packages
-  // const { initConversionTracking } = await import('../plugins/rum-conversion/src/index.js');
-  // await initConversionTracking.call(context, document);
+  const { initConversionTracking } = await import('../plugins/rum-conversion/src/index.js');
+  await initConversionTracking.call(context, document);
 }
 
 /**
@@ -422,7 +492,7 @@ export async function useGraphQL(query, param) {
     const environment = data['aem-author'];
     return { adventures, environment }; // eslint-disable-line consistent-return
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
+    console.log(JSON.stringify(error)); // eslint-disable-line no-console
   }
 }
 

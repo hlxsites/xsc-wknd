@@ -56,13 +56,9 @@ main .hero picture {
   right: 0;
   object-fit: cover;
   box-sizing: border-box;
+  width: 100vw;
+  height: auto;
 }
-
-/* .article main .hero picture,
-.adventures main .hero picture {
-  bottom: 0;
-  top: auto;
-} */
 
 main .hero img {
   object-fit: cover;

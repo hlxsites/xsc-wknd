@@ -1,4 +1,4 @@
-import { getMetadata } from '../../scripts/lib-franklin.js';
+import { getMetadata } from '../../scripts/aem.js';
 import { useGraphQL } from '../../scripts/scripts.js';
 
 const QUERY = '/graphql/execute.json/aem-demo-assets/adventure-by-slug-v2;slug=';

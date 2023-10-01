@@ -1,4 +1,4 @@
-import { loadBlocks } from '../../scripts/lib-franklin.js';
+import { loadBlocks } from '../../scripts/aem.js';
 import { decorateMain } from '../../scripts/scripts.js';
 
 async function generateTabMainBlock(html) {
