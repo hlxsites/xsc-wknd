@@ -1,4 +1,4 @@
-import { getMetadata } from '../../scripts/lib-franklin.js';
+import { getMetadata } from '../../scripts/aem.js';
 
 const ENDPOINT = '/graphql/execute.json/aem-demo-assets/';
 const QUERY = 'adventure-six;limit=';

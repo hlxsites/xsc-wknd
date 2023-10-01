@@ -1,8 +1,18 @@
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 main .scroll-container {
   margin-top: -20px;
   position: relative;
   min-height: 100vh;
 }
+
+main .scroll-container .fade-in-image {
+  .fade-in-image { animation: fadeIn 5s; }
+}
+
 main .scroll-container > div > .card {
   background-color: transparent;
   position: relative;

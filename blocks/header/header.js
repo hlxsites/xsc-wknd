@@ -1,4 +1,4 @@
-import { getMetadata, decorateIcons, loadBlocks } from '../../scripts/lib-franklin.js';
+import { getMetadata, decorateIcons, loadBlocks } from '../../scripts/aem.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');

@@ -1,5 +1,5 @@
 import { addElement, useGraphQL } from '../../scripts/scripts.js';
-import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
   const scrollContainer = block.querySelector('.scroll-container');
@@ -22,9 +22,16 @@ export default async function decorate(block) {
         hasNext = adventures.data.adventurePaginated.pageInfo.hasNextPage;
 
         adventures.data.adventurePaginated.edges.forEach((adventure) => {
-          const pic = createOptimizedPicture(`${environment}${adventure.node.primaryImage.dm}`, adventure.node.slug, true, [{ media: '(min-width: 600px)', width: '2000' }], true);
+          const pic = createOptimizedPicture(`${environment}${adventure.node.primaryImage.dm}`, adventure.node.slug, true);
+          [...pic.children].forEach((source) => {
+            if (source.hasAttribute('srcset')) source.setAttribute('srcset', `${environment}${source.srcset}`);
+            else if (source.hasAttribute('src')) {
+              const { pathname } = new URL(source.src);
+              source.setAttribute('src', `${environment}${pathname}`);
+            }
+          });
           const pattern = `
-          <div class='card-image'></div> 
+          <div class='card-image fade-in-image'></div> 
           <div class='card-content'>
             <div>
               <h5 itemProp='title' itemType='text' data-editor-itemlabel='Title'>${adventure.node.title}</h5>
