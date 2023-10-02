@@ -8,7 +8,7 @@ const getMetadata = (name, doc) => {
     .map((m) => m.content)
     .join(', ');
   return meta || '';
-}
+};
 
 /**
  * Loads a fragment.

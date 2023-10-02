@@ -31,23 +31,16 @@ export default async function decorate(block) {
         const doc = parser.parseFromString(await resp.text(), 'text/html');
         const heroPicture = doc.querySelector('picture');
         const title = getMetadata('og:title', doc);
-
         const card = document.createElement('div');
         card.classList.add('card');
-
         const h4 = document.createElement('h4');
         h4.textContent = title;
-
         card.appendChild(heroPicture);
         card.appendChild(h4);
-
         const a = document.createElement('a');
         a.href = doc.querySelector('link').href;
         a.appendChild(card);
-
         cards.appendChild(a);
-
-
         block.append(cards);
 
         const leftPaddle = addElement('button', { class: 'left-paddle paddle hidden' }, { innerText: '<' });
