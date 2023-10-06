@@ -417,6 +417,21 @@ export default async function decorate(block) {
     form.setAttribute('itemscope', '');
     form.setAttribute('data-editor-itemlabel', 'Form Container');
     formLink.replaceWith(form);
+    if (form.getAttribute('data-action')?.includes('language')) {
+      const { origin, pathname } = window.location;
+      const lang = pathname.split('/')[1];
+      form.querySelectorAll('option').forEach((option) => {
+        if (option.hasAttribute('selected')) option.remove();
+        if (option.getAttribute('value')?.substring(0, 2).toLowerCase() === lang) option.setAttribute('selected', 'true');
+        const select = form.querySelector('select');
+        select.addEventListener('change', ((e) => {
+          e.preventDefault();
+          const pn = pathname.replace(lang, e.target.value.substring(0, 2).toLowerCase());
+          window.location.href = `${origin}${pn}`;
+        }));
+      });
+    }
+
     block.style.setProperty('visibility', 'visible');
     const config = readBlockConfig(block);
     Object.entries(config).forEach(([key, value]) => { if (value) form.dataset[key] = value; });
