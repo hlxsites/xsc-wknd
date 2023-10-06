@@ -63,7 +63,7 @@ export default async function decorate($block) {
   const $image = document.createElement('div');
   $image.classList.add('image');
   // find image
-  const $hero = createOptimizedPicture(picture);
+  const $hero = createOptimizedPicture(picture, 'featured article', true);
   if ($hero) {
     $image.append($hero);
   }
