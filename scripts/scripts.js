@@ -66,7 +66,7 @@ window.hlx.plugins.add('experimentation', {
   condition: () => getMetadata('experiment')
     || Object.keys(getAllMetadata('campaign')).length
     || Object.keys(getAllMetadata('audience')).length,
-  options: { audiences: AUDIENCES, prodHost: 'main--wknd-demo--deckreyes.hlx.page' },
+  options: { audiences: AUDIENCES, prodHost: 'experimentation--xsc-wknd--hlxsites.hlx.page' },
   url: '/plugins/experimentation/src/index.js',
 });
 
