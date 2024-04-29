@@ -305,12 +305,20 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
 
   // load experiments
-  const experiment = toClassName(getMetadata('experiment'));
-  const instantExperiment = getMetadata('instant-experiment');
-  if (instantExperiment || experiment) {
-    const { runExperiment } = await import('./experimentation/index.js');
-    await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
-  }
+  //const experiment = toClassName(getMetadata('experiment'));
+  //const instantExperiment = getMetadata('instant-experiment');
+  //if (instantExperiment || experiment) {
+  //  const { runExperiment } = await import('./experimentation/index.js');
+  //  await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
+  //}
+
+  window.hlx.plugins.add('experimentation', {
+    condition: () => getMetadata('experiment')
+      || Object.keys(getAllMetadata('campaign')).length
+      || Object.keys(getAllMetadata('audience')).length,
+    options: { audiences: AUDIENCES, prodHost: 'main--wknd-demo--deckreyes.hlx.page' },
+    url: '/plugins/experimentation/src/index.js',
+  });
 
   const main = doc.querySelector('main');
   if (main) {
@@ -364,14 +372,14 @@ async function loadLazy(doc) {
   sampleRUM.observe(main.querySelectorAll('picture > img'));
 
   // Load experimentation preview overlay
-  if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
-    const preview = await import(`${window.hlx.codeBasePath}/tools/preview/preview.js`);
-    await preview.default();
-    if (window.hlx.experiment) {
-      const experimentation = await import(`${window.hlx.codeBasePath}/tools/preview/experimentation.js`);
-      experimentation.default();
-    }
-  }
+  //if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
+  //  const preview = await import(`${window.hlx.codeBasePath}/tools/preview/preview.js`);
+  //  await preview.default();
+  //  if (window.hlx.experiment) {
+  //    const experimentation = await import(`${window.hlx.codeBasePath}/tools/preview/experimentation.js`);
+  //    experimentation.default();
+  //  }
+  //}
 
   // Mark customer as having viewed the page once
   localStorage.setItem('franklin-visitor-returning', true);
