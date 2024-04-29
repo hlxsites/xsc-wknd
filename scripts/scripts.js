@@ -406,7 +406,9 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  await window.hlx.plugins.load('eager', pluginContext);
   await loadEager(document);
+  await window.hlx.plugins.load('lazy', pluginContext);
   await loadLazy(document);
   loadDelayed();
 }
