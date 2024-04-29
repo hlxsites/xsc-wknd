@@ -19,6 +19,12 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
+const AUDIENCES = {
+  mobile: () => window.innerWidth < 600,
+  desktop: () => window.innerWidth >= 600,
+  // define your custom audiences here as needed
+};
+
 // Define the custom audiences mapping for experimentation
 const EXPERIMENTATION_CONFIG = {
   audiences: {
