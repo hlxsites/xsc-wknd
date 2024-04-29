@@ -26,14 +26,9 @@ if (!WKND_URL) {
   // Set screen size
   await page.setViewport({ width: 1080, height: 1024 });
 
-  const urls = ['https://main--xsc-wknd--hlxsites.hlx.page/en/', 
-  'https://main--xsc-wknd--hlxsites.hlx.page/en/magazine/guide-la-skateparks',
-  'https://main--xsc-wknd--hlxsites.hlx.page/en/magazine/arctic-surfing',
-  'https://main--xsc-wknd--hlxsites.hlx.page/en/magazine/western-australia', 
-  'https://main--xsc-wknd--hlxsites.hlx.page/en/magazine/san-diego-surf-spot',
-  'https://main--xsc-wknd--hlxsites.hlx.page/en/magazine/ski-touring',
-  'https://main--xsc-wknd--hlxsites.hlx.page/en/about-us/',
-  'https://main--xsc-wknd--hlxsites.hlx.page/en/faq/'];
+  const urls = ['https://experimentation--xsc-wknd--hlxsites.hlx.page/en/', 
+  'https://experimentation--xsc-wknd--hlxsites.hlx.page/en/experimentation/index-camping',
+  'https://experimentation--xsc-wknd--hlxsites.hlx.page/en/experimentation/index-biking'];
   
   for (let i = 0; i < ITERATIONS; i++) {
     for (let u = 0; u < urls.length; u++) {
