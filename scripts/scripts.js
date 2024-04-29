@@ -14,8 +14,7 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
-  loadScript,
-  sampleRUM,
+  loadScript, 
   toCamelCase,
   toClassName,
 } from './aem.js';
