@@ -14,14 +14,20 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
+  loadScript,
+  sampleRUM,
+  toCamelCase,
   toClassName,
 } from './aem.js';
 
 // Define an execution context
 const pluginContext = {
+  getAllMetadata,
   getMetadata,
-  loadCSS,  
-  sampleRUM, 
+  loadCSS,
+  loadScript,
+  sampleRUM,
+  toCamelCase,
   toClassName,
 };
 
