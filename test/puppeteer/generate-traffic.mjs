@@ -8,7 +8,7 @@ import puppeteer from 'puppeteer';
  */
 
 const WKND_URL = process.env.WKND_URL;
-const ITERATIONS = parseInt(process.env.ITERATIONS) || 4;
+const ITERATIONS = parseInt(process.env.ITERATIONS) || 10;
 
 if (!WKND_URL) {
   console.error("Please specify the TEST_URL environment variable.");
@@ -21,21 +21,33 @@ if (!WKND_URL) {
   const page = await browser.newPage();
 
   // Navigate the page to the WKND URL to generate traffic for
-  //await page.goto(WKND_URL);
+  await page.goto(WKND_URL);
 
   // Set screen size
   await page.setViewport({ width: 1080, height: 1024 });
 
-  const urls = ['https://experimentation--xsc-wknd--hlxsites.hlx.page/en/', 
-  'https://experimentation--xsc-wknd--hlxsites.hlx.page/en/experimentation/index-camping',
-  'https://experimentation--xsc-wknd--hlxsites.hlx.page/en/experimentation/index-biking'];
-  
+  // Loop the desired number of times
   for (let i = 0; i < ITERATIONS; i++) {
-    for (let u = 0; u < urls.length; u++) {
-      const url = urls[u];     
-      await page.goto(`${url}`,  { waitUntil: "networkidle2" });  
-      }
+
+    // First, click through the different sections of the site
+    const headerLinks = ["/en/faq/", "/en/about-us/"];
+    for (const link of headerLinks) {
+      // Wait for the page to load, click the next link, then repeat
+      const linkSelector = `a[href='${link}']`;
+      await page.waitForSelector(linkSelector);
+      await page.click(linkSelector);
+    }
+
+    // Navigate to the top level page
+    const url = WKND_URL;     
+    await page.goto(`${url}`,  { waitUntil: "networkidle2" });  
+
+    // Wait for the header to reappear, then click it to return back to the top level page
+    //await page.waitForSelector(headerLink);
+    //await page.click(headerLink);
+
   }
+
   console.log('Done! Ran ' + ITERATIONS + " times.");
   await browser.close();
 })();
