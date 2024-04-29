@@ -39,6 +39,25 @@ const AUDIENCES = {
   // define your custom audiences here as needed
 };
 
+export function getAllMetadata(scope) {
+  return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]
+    .reduce((res, meta) => {
+      const id = toClassName(meta.name
+        ? meta.name.substring(scope.length + 1)
+        : meta.getAttribute('property').split(':')[1]);
+      res[id] = meta.getAttribute('content');
+      return res;
+    }, {});
+}
+
+window.hlx.plugins.add('experimentation', {
+  condition: () => getMetadata('experiment')
+    || Object.keys(getAllMetadata('campaign')).length
+    || Object.keys(getAllMetadata('audience')).length,
+  options: { audiences: AUDIENCES, prodHost: 'experimentation--xsc-wknd--hlxsites.hlx.page' },
+  url: '/plugins/experimentation/src/index.js',
+});
+
 // Define the custom audiences mapping for experimentation
 const EXPERIMENTATION_CONFIG = {
   audiences: {
@@ -81,14 +100,6 @@ export function addVideo(element, href) {
     video.play();
   });
 }
-
-window.hlx.plugins.add('experimentation', {
-  condition: () => getMetadata('experiment')
-    || Object.keys(getAllMetadata('campaign')).length
-    || Object.keys(getAllMetadata('audience')).length,
-  options: { audiences: AUDIENCES, prodHost: 'experimentation--xsc-wknd--hlxsites.hlx.page' },
-  url: '/plugins/experimentation/src/index.js',
-});
 
 /**
  * Convience method for creating tags in one line of code
@@ -332,6 +343,15 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
+  // Add below snippet early in the eager phase
+  if (getMetadata('experiment')
+  || Object.keys(getAllMetadata('campaign')).length
+  || Object.keys(getAllMetadata('audience')).length) {
+  // eslint-disable-next-line import/no-relative-packages
+  const { loadEager: runEager } = await import('../plugins/experimentation/src/index.js');
+  await runEager(document, { audiences: AUDIENCES }, pluginContext);
+  }
+
   // load experiments
   //const experiment = toClassName(getMetadata('experiment'));
   //const instantExperiment = getMetadata('instant-experiment');
@@ -419,6 +439,15 @@ async function loadLazy(doc) {
   sampleRUM.observe(main.querySelectorAll('picture > img'));
 
   await window.hlx.plugins.run('loadLazy', pluginContext);
+
+   // Add below snippet at the end of the lazy phase
+   if ((getMetadata('experiment')
+   || Object.keys(getAllMetadata('campaign')).length
+   || Object.keys(getAllMetadata('audience')).length)) {
+   // eslint-disable-next-line import/no-relative-packages
+   const { loadLazy: runLazy } = await import('../plugins/experimentation/src/index.js');
+   await runLazy(document, { audiences: AUDIENCES }, pluginContext);
+ }
 
   // Load experimentation preview overlay
   //if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
