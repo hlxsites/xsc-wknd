@@ -168,45 +168,7 @@ class PluginsRegistry {
     return !!this.#plugins.has(id);
   }
 
-  // Load all plugins that are referenced by URL, and updated their configuration with the
-  // actual API they expose
-  async load(phase, context) {
-    [...this.#plugins.entries()]
-      .filter(
-        ([, plugin]) => plugin.condition && !plugin.condition(document, plugin.options, context),
-      )
-      .map(([id]) => this.#plugins.delete(id));
-    return Promise.all(
-      [...this.#plugins.entries()]
-        // Filter plugins that don't match the execution conditions
-        .filter(
-          ([, plugin]) => (!plugin.condition || plugin.condition(document, plugin.options, context))
-            && phase === plugin.load
-            && plugin.url,
-        )
-        .map(async ([key, plugin]) => {
-          try {
-            // If the plugin has a default export, it will be executed immediately
-            const pluginApi = (await loadModule(
-              !plugin.url.endsWith('.js')
-                ? `${plugin.url}/${plugin.url.split('/').pop()}.js`
-                : plugin.url,
-              !plugin.url.endsWith('.js')
-                ? `${plugin.url}/${plugin.url.split('/').pop()}.css`
-                : null,
-              document,
-              plugin.options,
-              context,
-            )) || {};
-            this.#plugins.set(key, { ...plugin, ...pluginApi });
-          } catch (err) {
-            // eslint-disable-next-line no-console
-            console.error('Could not load specified plugin', key);
-            this.#plugins.delete(key);
-          }
-        }),
-    );
-  }
+  
 
   // Run a specific phase in the plugin
   async run(phase, context) {
