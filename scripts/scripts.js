@@ -320,6 +320,31 @@ async function loadEager(doc) {
   //  await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
   //}
 
+  await window.hlx.plugins.run('loadEager', pluginContext);
+
+  window.adobeDataLayer = window.adobeDataLayer || [];
+
+  let pageType = 'CMS';
+  if (document.body.querySelector('main .product-details')) {
+    pageType = 'Product';
+  } else if (document.body.querySelector('main .product-list-page')) {
+    pageType = 'Category';
+  } else if (document.body.querySelector('main .commerce-cart')) {
+    pageType = 'Cart';
+  } else if (document.body.querySelector('main .commerce-checkout')) {
+    pageType = 'Checkout';
+  }
+  window.adobeDataLayer.push({
+    pageContext: {
+      pageType,
+      pageName: document.title,
+      eventType: 'visibilityHidden',
+      maxXOffset: 0,
+      maxYOffset: 0,
+      minXOffset: 0,
+      minYOffset: 0,
+    },
+  });
 
 
   const main = doc.querySelector('main');
@@ -372,6 +397,8 @@ async function loadLazy(doc) {
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
+
+  await window.hlx.plugins.run('loadLazy', pluginContext);
 
   // Load experimentation preview overlay
   //if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
