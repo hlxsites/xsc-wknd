@@ -62,6 +62,14 @@ export function addVideo(element, href) {
   });
 }
 
+window.hlx.plugins.add('experimentation', {
+  condition: () => getMetadata('experiment')
+    || Object.keys(getAllMetadata('campaign')).length
+    || Object.keys(getAllMetadata('audience')).length,
+  options: { audiences: AUDIENCES, prodHost: 'main--wknd-demo--deckreyes.hlx.page' },
+  url: '/plugins/experimentation/src/index.js',
+});
+
 /**
  * Convience method for creating tags in one line of code
  * @param {string} tag Tag to create
@@ -312,13 +320,7 @@ async function loadEager(doc) {
   //  await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
   //}
 
-  window.hlx.plugins.add('experimentation', {
-    condition: () => getMetadata('experiment')
-      || Object.keys(getAllMetadata('campaign')).length
-      || Object.keys(getAllMetadata('audience')).length,
-    options: { audiences: AUDIENCES, prodHost: 'main--wknd-demo--deckreyes.hlx.page' },
-    url: '/plugins/experimentation/src/index.js',
-  });
+
 
   const main = doc.querySelector('main');
   if (main) {
