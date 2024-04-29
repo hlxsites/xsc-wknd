@@ -201,8 +201,8 @@ class PluginsRegistry {
             this.#plugins.set(key, { ...plugin, ...pluginApi });
           } catch (err) {
             // eslint-disable-next-line no-console
-            console.error('Could not load specified plugin', key);
-            this.#plugins.delete(key);
+            //console.error('Could not load specified plugin', key);
+            //this.#plugins.delete(key);
           }
         }),
     );
