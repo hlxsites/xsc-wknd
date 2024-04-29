@@ -17,6 +17,14 @@ import {
   toClassName,
 } from './aem.js';
 
+// Define an execution context
+const pluginContext = {
+  getMetadata,
+  loadCSS,  
+  sampleRUM, 
+  toClassName,
+};
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 const AUDIENCES = {
