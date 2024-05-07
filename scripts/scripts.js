@@ -14,10 +14,48 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
+  loadScript, 
+  toCamelCase,
   toClassName,
 } from './aem.js';
 
+// Define an execution context
+const pluginContext = {
+  getAllMetadata,
+  getMetadata,
+  loadCSS,
+  loadScript,
+  sampleRUM,
+  toCamelCase,
+  toClassName,
+};
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
+
+const AUDIENCES = {
+  mobile: () => window.innerWidth < 600,
+  desktop: () => window.innerWidth >= 600,
+  // define your custom audiences here as needed
+};
+
+export function getAllMetadata(scope) {
+  return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]
+    .reduce((res, meta) => {
+      const id = toClassName(meta.name
+        ? meta.name.substring(scope.length + 1)
+        : meta.getAttribute('property').split(':')[1]);
+      res[id] = meta.getAttribute('content');
+      return res;
+    }, {});
+}
+
+window.hlx.plugins.add('experimentation', {
+  condition: () => getMetadata('experiment')
+    || Object.keys(getAllMetadata('campaign')).length
+    || Object.keys(getAllMetadata('audience')).length,
+  options: { audiences: AUDIENCES, prodHost: 'experimentation--xsc-wknd--hlxsites.hlx.page' },
+  url: '/plugins/experimentation/src/index.js',
+});
 
 // Define the custom audiences mapping for experimentation
 const EXPERIMENTATION_CONFIG = {
@@ -304,13 +342,49 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
-  // load experiments
-  const experiment = toClassName(getMetadata('experiment'));
-  const instantExperiment = getMetadata('instant-experiment');
-  if (instantExperiment || experiment) {
-    const { runExperiment } = await import('./experimentation/index.js');
-    await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
+  // Add below snippet early in the eager phase
+  if (getMetadata('experiment')
+  || Object.keys(getAllMetadata('campaign')).length
+  || Object.keys(getAllMetadata('audience')).length) {
+  // eslint-disable-next-line import/no-relative-packages
+  const { loadEager: runEager } = await import('../plugins/experimentation/src/index.js');
+  await runEager(document, { audiences: AUDIENCES }, pluginContext);
   }
+
+  // load experiments
+  //const experiment = toClassName(getMetadata('experiment'));
+  //const instantExperiment = getMetadata('instant-experiment');
+  //if (instantExperiment || experiment) {
+  //  const { runExperiment } = await import('./experimentation/index.js');
+  //  await runExperiment(experiment, instantExperiment, EXPERIMENTATION_CONFIG);
+  //}
+
+  await window.hlx.plugins.run('loadEager', pluginContext);
+
+  window.adobeDataLayer = window.adobeDataLayer || [];
+
+  let pageType = 'CMS';
+  if (document.body.querySelector('main .product-details')) {
+    pageType = 'Product';
+  } else if (document.body.querySelector('main .product-list-page')) {
+    pageType = 'Category';
+  } else if (document.body.querySelector('main .commerce-cart')) {
+    pageType = 'Cart';
+  } else if (document.body.querySelector('main .commerce-checkout')) {
+    pageType = 'Checkout';
+  }
+  window.adobeDataLayer.push({
+    pageContext: {
+      pageType,
+      pageName: document.title,
+      eventType: 'visibilityHidden',
+      maxXOffset: 0,
+      maxYOffset: 0,
+      minXOffset: 0,
+      minYOffset: 0,
+    },
+  });
+
 
   const main = doc.querySelector('main');
   if (main) {
@@ -363,15 +437,26 @@ async function loadLazy(doc) {
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
 
+  await window.hlx.plugins.run('loadLazy', pluginContext);
+
+   // Add below snippet at the end of the lazy phase
+   if ((getMetadata('experiment')
+   || Object.keys(getAllMetadata('campaign')).length
+   || Object.keys(getAllMetadata('audience')).length)) {
+   // eslint-disable-next-line import/no-relative-packages
+   const { loadLazy: runLazy } = await import('../plugins/experimentation/src/index.js');
+   await runLazy(document, { audiences: AUDIENCES }, pluginContext);
+ }
+
   // Load experimentation preview overlay
-  if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
-    const preview = await import(`${window.hlx.codeBasePath}/tools/preview/preview.js`);
-    await preview.default();
-    if (window.hlx.experiment) {
-      const experimentation = await import(`${window.hlx.codeBasePath}/tools/preview/experimentation.js`);
-      experimentation.default();
-    }
-  }
+  //if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.hlx.page')) {
+  //  const preview = await import(`${window.hlx.codeBasePath}/tools/preview/preview.js`);
+  //  await preview.default();
+  //  if (window.hlx.experiment) {
+  //    const experimentation = await import(`${window.hlx.codeBasePath}/tools/preview/experimentation.js`);
+  //    experimentation.default();
+  //  }
+  //}
 
   // Mark customer as having viewed the page once
   localStorage.setItem('franklin-visitor-returning', true);
@@ -396,7 +481,9 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  await window.hlx.plugins.load('eager', pluginContext);
   await loadEager(document);
+  await window.hlx.plugins.load('lazy', pluginContext);
   await loadLazy(document);
   loadDelayed();
 }
